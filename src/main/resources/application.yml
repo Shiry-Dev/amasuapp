@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: "@project.artifactId@"
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+  profiles:
+    active: dev
