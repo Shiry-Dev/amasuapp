@@ -8,9 +8,14 @@ services:
       ORACLE_PWD: Ora1234
     ports:
       - "1521:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
     networks:
       - db-network
 
 networks:
   db-network:
     driver: bridge
+
+volumes:
+  oracle-data:
