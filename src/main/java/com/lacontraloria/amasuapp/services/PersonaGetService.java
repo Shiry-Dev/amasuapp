@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Persona;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,8 @@ public class PersonaGetService {
     }
 
     @Transactional(readOnly = true)
-    public Persona findPersonaByDniReniec(Long dniReniec) {
-        return personaRepository.findById(dniReniec).get();
+    public Persona findPersonaByDniReniec(Long personaId) {
+        return personaRepository.findById(personaId)
+                .orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
     }
 }
