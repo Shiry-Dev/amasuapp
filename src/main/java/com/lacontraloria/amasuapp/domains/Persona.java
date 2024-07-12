@@ -9,6 +9,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,5 +50,9 @@ public class Persona implements Serializable {
     @JsonIgnoreProperties("persona")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Administrador administrador;
+//
+//    @OneToMany(mappedBy = "persona")
+//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+//    private List<CiudadanoCurso> ciudadanoCursos;
 
 }
