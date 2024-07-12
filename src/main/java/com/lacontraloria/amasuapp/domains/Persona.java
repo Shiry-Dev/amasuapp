@@ -1,5 +1,8 @@
 package com.lacontraloria.amasuapp.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,5 +44,10 @@ public class Persona implements Serializable {
 
     @Column(name = "SEXO", nullable = false, length = 15)
     private String sexo;
+
+    @OneToOne(mappedBy = "persona")
+    @JsonIgnoreProperties("persona")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Administrador administrador;
 
 }

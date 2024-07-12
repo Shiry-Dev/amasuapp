@@ -37,7 +37,7 @@ public class PersonaServiceImp {
     @Transactional
     public Persona updatePersona(Persona persona){
         personaRepository.findById(persona.getDniRieniec())
-                .orElseThrow(() -> new RuntimeException("No dniRieniec " + persona.getDniRieniec() + " into the data base."));
+                .orElseThrow(() -> new NotFoundException("No dniRieniec " + persona.getDniRieniec() + " into the data base."));
         Persona updatedPersona = personaRepository.save(persona);
         return updatedPersona;
     }
@@ -45,7 +45,7 @@ public class PersonaServiceImp {
     @Transactional
     public void deletePersona(Long personaId) {
         Persona persona = personaRepository.findById(personaId)
-                .orElseThrow(() -> new RuntimeException("No dniRienic " + personaId + " into the data base."));
+                .orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
         personaRepository.delete(persona);
     }
 }
