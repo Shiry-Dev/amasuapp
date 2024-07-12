@@ -2,7 +2,9 @@ package com.lacontraloria.amasuapp.adapters.controllers;
 
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.PersonaCreateService;
+import com.lacontraloria.amasuapp.services.PersonaDeleteService;
 import com.lacontraloria.amasuapp.services.PersonaGetService;
+import com.lacontraloria.amasuapp.services.PersonaUpdateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,11 +17,17 @@ public class PersonaController {
 
     private final PersonaCreateService personaCreateService;
     private final PersonaGetService personaGetService;
+    private final PersonaUpdateService personaUpdateService;
+    private final PersonaDeleteService personaDeleteService;
 
     public PersonaController(PersonaCreateService personaCreateService,
-                             PersonaGetService personaGetService) {
+                             PersonaGetService personaGetService,
+                             PersonaUpdateService personaUpdateService,
+                             PersonaDeleteService personaDeleteService) {
         this.personaCreateService = personaCreateService;
         this.personaGetService = personaGetService;
+        this.personaUpdateService = personaUpdateService;
+        this.personaDeleteService = personaDeleteService;
     }
 
     @PostMapping
@@ -49,7 +57,15 @@ public class PersonaController {
     }
 
     @PutMapping("/{personaId}")
-    public ResponseEntity<Void> putPersonalById(@PathVariable String personaId) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
+                                                   @RequestBody Persona persona) {
+        Persona updatedPersona =  personaUpdateService.updatePersona(persona);
+        return ResponseEntity.ok().body(updatedPersona);
+    }
+
+    @DeleteMapping("/{personaId}")
+    public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId) {
+        personaDeleteService.deletePersona(personaId);
+        return ResponseEntity.accepted().build();
     }
 }
