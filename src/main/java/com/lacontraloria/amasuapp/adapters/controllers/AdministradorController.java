@@ -65,8 +65,8 @@ public class AdministradorController {
 
     @DeleteMapping("/{administradorId}")
     public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId,
-                                                  @PathVariable Long admId) {
-        administradorServiceImp.deleteAdm(personaId, admId);
+                                                  @PathVariable Long administradorId) {
+        administradorServiceImp.deleteAdm(personaId, administradorId);
         return ResponseEntity.accepted().build();
     }
 }
