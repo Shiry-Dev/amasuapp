@@ -50,9 +50,5 @@ public class Persona implements Serializable {
     @JsonIgnoreProperties("persona")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Administrador administrador;
-//
-//    @OneToMany(mappedBy = "persona")
-//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-//    private List<CiudadanoCurso> ciudadanoCursos;
 
 }

@@ -30,7 +30,7 @@ public class CursoController {
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(reqBody.getIdCurso())
+                .buildAndExpand(curso.getIdCurso())
                 .toUri();
         return ResponseEntity.created(uri).body(curso);
     }

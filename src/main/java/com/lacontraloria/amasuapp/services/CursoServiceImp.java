@@ -1,10 +1,8 @@
 package com.lacontraloria.amasuapp.services;
 
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
-import com.lacontraloria.amasuapp.adapters.repositories.CiudadanoCursoRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.CursoRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
-import com.lacontraloria.amasuapp.domains.CiudadanoCurso;
 import com.lacontraloria.amasuapp.domains.Curso;
 import com.lacontraloria.amasuapp.domains.Persona;
 import org.springframework.data.domain.Page;
@@ -17,14 +15,11 @@ public class CursoServiceImp {
 
     private final CursoRepository cursoRepository;
     private final PersonaRepository personaRepository;
-    private final CiudadanoCursoRepository ciudadanoCursoRepository;
 
     public CursoServiceImp(CursoRepository cursoRepository,
-                           PersonaRepository personaRepository,
-                           CiudadanoCursoRepository ciudadanoCursoRepository) {
+                           PersonaRepository personaRepository) {
         this.cursoRepository = cursoRepository;
         this.personaRepository = personaRepository;
-        this.ciudadanoCursoRepository = ciudadanoCursoRepository;
     }
 
     @Transactional
