@@ -1,11 +1,11 @@
 package com.lacontraloria.amasuapp.services;
 
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
+import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
+import com.lacontraloria.amasuapp.adapters.repositories.ObservacionAlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.ObservacionRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
-import com.lacontraloria.amasuapp.domains.Curso;
-import com.lacontraloria.amasuapp.domains.Observacion;
-import com.lacontraloria.amasuapp.domains.Persona;
+import com.lacontraloria.amasuapp.domains.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class ObservacionServiceImp {
 
     private final ObservacionRepository observacionRepository;
+    private final AlertaRepository alertaRepository;
     private final PersonaRepository personaRepository;
+    private final ObservacionAlertaRepository observacionAlertaRepository;
 
-    public ObservacionServiceImp(ObservacionRepository observacionRepository, PersonaRepository personaRepository) {
+    public ObservacionServiceImp(ObservacionRepository observacionRepository, AlertaRepository alertaRepository, PersonaRepository personaRepository, ObservacionAlertaRepository observacionAlertaRepository) {
         this.observacionRepository = observacionRepository;
+        this.alertaRepository = alertaRepository;
         this.personaRepository = personaRepository;
+        this.observacionAlertaRepository = observacionAlertaRepository;
     }
 
     @Transactional
     public Observacion createObservacion(Long personaId, Long alertaId, Observacion observacion){
         validatePersonaId(personaId);
+        observacion.setAlerta(validateAlertaId(alertaId));
         return observacionRepository.save(observacion);
     }
 
@@ -63,7 +68,7 @@ public class ObservacionServiceImp {
         return personaRepository.findById(personaId).orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
     }
 
-//    private Persona validatePersonaId(Long personaId) {
-//        return personaRepository.findById(personaId).orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
-//    }
+    private Alerta validateAlertaId(Long alertaId) {
+        return alertaRepository.findById(alertaId).orElseThrow(() -> new NotFoundException("No alertaId " + alertaId + " into the data base."));
+    }
 }
