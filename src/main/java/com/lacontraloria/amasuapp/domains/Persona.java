@@ -23,7 +23,7 @@ import java.util.List;
 public class Persona implements Serializable {
 
     @Id
-    @Column(name = "DNIRENIEC")
+    @Column(name = "DNIRENIEC", length = 8)
     private Long dniRieniec;
 
     @Column(name = "PATERNO", nullable = false, length = 100)
@@ -48,9 +48,17 @@ public class Persona implements Serializable {
     private String sexo;
 
     @OneToOne(mappedBy = "persona")
-//    @JsonIgnoreProperties("persona")
-    @JsonIgnore
+    @JsonIgnoreProperties("persona")
+//    @JsonIgnore
 //    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Administrador administrador;
+
+    @OneToOne(mappedBy = "persona")
+    @JsonIgnore
+    private Coordinador coordinador;
+
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<Curso> cursos;
 
 }

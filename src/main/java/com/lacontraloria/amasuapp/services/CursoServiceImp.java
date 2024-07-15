@@ -24,7 +24,9 @@ public class CursoServiceImp {
 
     @Transactional
     public Curso createCurso(Long personaId, Curso curso){
-        validatePersonaId(personaId);
+        Persona persona = validatePersonaId(personaId);
+        curso.setIdCurso(personaId);
+        curso.setPersona(persona);
         return cursoRepository.save(curso);
     }
 
@@ -44,9 +46,11 @@ public class CursoServiceImp {
 
     @Transactional
     public Curso updateCurso(Long personaId, Long cursoId, Curso curso){
-        validatePersonaId(personaId);
-        cursoRepository.findById(curso.getIdCurso())
+        Persona persona = validatePersonaId(personaId);
+        Curso cursoDb = cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new NotFoundException("No cursoId " + cursoId + " into the data base."));
+        curso.setIdCurso(cursoDb.getIdCurso());
+        curso.setPersona(persona);
         Curso updatedCurso = cursoRepository.save(curso);
         return updatedCurso;
     }

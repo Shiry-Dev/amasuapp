@@ -48,10 +48,13 @@ public class ObservacionServiceImp {
     }
 
     @Transactional
-    public Observacion updateObservacion(Long personaId, Long observacionId, Observacion observacion){
+    public Observacion updateObservacion(Long personaId, Long alertaId, Long observacionId, Observacion observacion){
         validatePersonaId(personaId);
-        observacionRepository.findById(observacion.getIdObservacion())
+        Alerta alerta = validateAlertaId(alertaId);
+        Observacion obs = observacionRepository.findById(observacionId)
                 .orElseThrow(() -> new NotFoundException("No observacionId " + observacionId + " into the data base."));
+        observacion.setIdObservacion(obs.getIdObservacion());
+        observacion.setAlerta(alerta);
         Observacion updatedObs = observacionRepository.save(observacion);
         return updatedObs;
     }

@@ -61,7 +61,7 @@ public class ObservacionController {
                                             @PathVariable Long alertaId,
                                             @PathVariable Long observacionId,
                                             @RequestBody Observacion observacion) {
-        Observacion updatedObs =  observacionServiceImp.updateObservacion(personaId, observacionId, observacion);
+        Observacion updatedObs =  observacionServiceImp.updateObservacion(personaId, alertaId, observacionId, observacion);
         return ResponseEntity.ok().body(updatedObs);
     }
 

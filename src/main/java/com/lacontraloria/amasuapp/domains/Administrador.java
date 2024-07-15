@@ -16,10 +16,12 @@ import java.io.Serializable;
 public class Administrador implements Serializable {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADMSEQ")
+//    @SequenceGenerator(name = "ADMSEQ", sequenceName = "ADMSEQ", allocationSize = 1)
     @Column(name = "DNIADMINISTRADOR")
     private Long dniAdministrador;
 
-    @Column(name = "IDADMINISTRADOR", nullable = false, length = 30)
+    @Column(name = "IDADMINISTRADOR", nullable = false, unique = true, length = 30)
     private String idAdministrador;
 
     @Column(name = "CELULAR", length = 15)
@@ -28,7 +30,7 @@ public class Administrador implements Serializable {
     @Column(name = "EMAILSECUNDARIO", length = 100)
     private String emailSecundario;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "DNIADMINISTRADOR", referencedColumnName = "DNIRENIEC", foreignKey = @ForeignKey(name = "FK_ADMINISTRADOR_PERSONA"))
     @JsonIgnoreProperties("administrador")
     private Persona persona;

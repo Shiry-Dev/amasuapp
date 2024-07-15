@@ -25,6 +25,7 @@ public class AdministradorServiceImp {
     @Transactional
     public Administrador createAdm(Long personaId, Administrador adm){
         Persona persona = validatePersonaId(personaId);
+        adm.setDniAdministrador(persona.getDniRieniec());
         adm.setPersona(persona);
         adm.setDniAdministrador(persona.getDniRieniec());
         return adminstradorRepository.save(adm);
@@ -49,6 +50,7 @@ public class AdministradorServiceImp {
         Persona persona = validatePersonaId(personaId);
         adminstradorRepository.findById(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
+        adm.setDniAdministrador(persona.getDniRieniec());
         adm.setPersona(persona);
         adm.setDniAdministrador(persona.getDniRieniec());
         return adminstradorRepository.save(adm);

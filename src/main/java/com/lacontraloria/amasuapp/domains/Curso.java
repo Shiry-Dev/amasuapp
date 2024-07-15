@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,13 +18,16 @@ import java.util.List;
 public class Curso implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CURSOSEQ")
+    @SequenceGenerator(name = "CURSOSEQ", sequenceName = "CURSOSEQ", allocationSize = 1)
     @Column(name = "IDCURSO")
     private Long idCurso;
 
     @Column(name = "DESCCURSO", nullable = false)
     private String descCurso;
-//
-//    @OneToMany(mappedBy = "curso")
-//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-//    private List<CiudadanoCurso> ciudadanosCursos;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "DNIRENIEC", referencedColumnName = "DNIRENIEC", nullable = false)
+    private Persona persona;
 }

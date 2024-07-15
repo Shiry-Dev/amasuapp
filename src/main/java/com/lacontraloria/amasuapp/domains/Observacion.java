@@ -27,7 +27,7 @@ public class Observacion implements Serializable {
     private String descObservacion;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "IDALERTA", referencedColumnName = "IDALERTA", nullable = false)
     private Alerta alerta;
 
