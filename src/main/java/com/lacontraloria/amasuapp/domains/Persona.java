@@ -50,7 +50,7 @@ public class Persona implements Serializable {
     @OneToOne(mappedBy = "persona")
     @JsonIgnoreProperties("persona")
 //    @JsonIgnore
-//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Administrador administrador;
 
     @OneToOne(mappedBy = "persona")
@@ -60,5 +60,9 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Curso> cursos;
+
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<Alerta> alertas;
 
 }

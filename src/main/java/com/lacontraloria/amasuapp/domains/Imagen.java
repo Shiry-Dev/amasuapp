@@ -18,8 +18,10 @@ import java.io.Serializable;
 public class Imagen implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMGSEQ")
+    @SequenceGenerator(name = "IMGSEQ", sequenceName = "IMGSEQ", allocationSize = 1)
     @Column(name = "IDIMAGEN")
-    private Long idImagem;
+    private Long idImagen;
 
     @Lob
     @Column(name = "IMAGEN1", nullable = false)
@@ -37,9 +39,9 @@ public class Imagen implements Serializable {
     @Column(name = "IMAGEN4")
     private byte[] imagen4;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "IDIMAGEN", referencedColumnName = "IDIMAGEN", foreignKey = @ForeignKey(name = "FK_ALERTA_IMAGEN"))
-//    @JsonIgnoreProperties("administrador")
-//    private Imagen imagen;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "IDALERTA", referencedColumnName = "IDALERTA", foreignKey = @ForeignKey(name = "FK_ALERTA_IMAGEN"))
+    @JsonIgnoreProperties("imagen")
+    private Alerta alerta;
 
 }

@@ -1,16 +1,18 @@
 package com.lacontraloria.amasuapp.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,6 +45,12 @@ public class Alerta implements Serializable {
     @OneToMany(mappedBy = "alerta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Observacion> observaciones;
+
+    @OneToOne(mappedBy = "alerta")
+//    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonIgnoreProperties("alerta")
+    private Imagen imagen;
 
     @Override
     public boolean equals(Object o) {
