@@ -2,7 +2,6 @@ package com.lacontraloria.amasuapp.services;
 
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
-import com.lacontraloria.amasuapp.adapters.repositories.ObservacionAlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.ObservacionRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.*;
@@ -17,13 +16,11 @@ public class ObservacionServiceImp {
     private final ObservacionRepository observacionRepository;
     private final AlertaRepository alertaRepository;
     private final PersonaRepository personaRepository;
-    private final ObservacionAlertaRepository observacionAlertaRepository;
 
-    public ObservacionServiceImp(ObservacionRepository observacionRepository, AlertaRepository alertaRepository, PersonaRepository personaRepository, ObservacionAlertaRepository observacionAlertaRepository) {
+    public ObservacionServiceImp(ObservacionRepository observacionRepository, AlertaRepository alertaRepository, PersonaRepository personaRepository) {
         this.observacionRepository = observacionRepository;
         this.alertaRepository = alertaRepository;
         this.personaRepository = personaRepository;
-        this.observacionAlertaRepository = observacionAlertaRepository;
     }
 
     @Transactional

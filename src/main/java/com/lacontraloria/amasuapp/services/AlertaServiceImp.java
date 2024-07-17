@@ -40,10 +40,13 @@ public class AlertaServiceImp {
     }
 
     @Transactional(readOnly = true)
-    public Page<Alerta> getAllAlerta(Long personaId, PageRequest pageRequest) {
+    public Page<Alerta> getAllAlerta(Long personaId, Long cui, PageRequest pageRequest) {
         validatePersonaId(personaId);
-        Page<Alerta> listAlerta = alertaRepository.findAll(pageRequest);
-        return listAlerta;
+        if(cui == null){
+            return alertaRepository.findAll(pageRequest);
+        }else {
+            return alertaRepository.findByCui(cui, pageRequest);
+        }
     }
 
     @Transactional

@@ -1,10 +1,9 @@
 package com.lacontraloria.amasuapp.services;
 
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
-import com.lacontraloria.amasuapp.adapters.repositories.AdminstradorRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
-import com.lacontraloria.amasuapp.domains.Administrador;
 import com.lacontraloria.amasuapp.domains.Persona;
+import com.lacontraloria.amasuapp.domains.RoleType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,55 +12,56 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AdministradorServiceImp {
 
-    private final AdminstradorRepository adminstradorRepository;
     private final PersonaRepository personaRepository;
 
-    public AdministradorServiceImp(AdminstradorRepository adminstradorRepository,
-                                   PersonaRepository personaRepository) {
-        this.adminstradorRepository = adminstradorRepository;
+    public AdministradorServiceImp(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
     }
 
+
     @Transactional
-    public Administrador createAdm(Long personaId, Administrador adm){
+    public Persona createAdm(Long personaId, Persona adm){
         Persona persona = validatePersonaId(personaId);
-        adm.setDniAdministrador(persona.getDniRieniec());
-        adm.setPersona(persona);
-        adm.setDniAdministrador(persona.getDniRieniec());
-        return adminstradorRepository.save(adm);
+        persona.setIdAdministrador(adm.getIdAdministrador());
+        persona.setCelular(adm.getCelular());
+        persona.setEmailSecundario(adm.getEmailSecundario());
+        persona.setRoleType(RoleType.ADMIN);
+        return personaRepository.save(persona);
     }
 
     @Transactional(readOnly = true)
-    public Administrador findAdminById(Long personaId, Long admId) {
+    public Persona findAdminById(Long personaId, Long admId) {
         validatePersonaId(personaId);
-        return adminstradorRepository.findById(admId)
+        return personaRepository.findById(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
     }
 
     @Transactional(readOnly = true)
-    public Page<Administrador> findAllAdm(Long personaId, PageRequest pageRequest) {
+    public Page<Persona> findAllAdm(Long personaId, PageRequest pageRequest) {
         validatePersonaId(personaId);
-        Page<Administrador> listAdm = adminstradorRepository.findAll(pageRequest);
+        Page<Persona> listAdm = personaRepository.findAllByRoleType(RoleType.ADMIN, pageRequest);
         return listAdm;
     }
 
     @Transactional
-    public Administrador updateAdm(Long personaId, Long admId, Administrador adm){
+    public Persona updateAdm(Long personaId, Long admId, Persona adm){
         Persona persona = validatePersonaId(personaId);
-        adminstradorRepository.findById(admId)
-                .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
-        adm.setDniAdministrador(persona.getDniRieniec());
-        adm.setPersona(persona);
-        adm.setDniAdministrador(persona.getDniRieniec());
-        return adminstradorRepository.save(adm);
+        if(persona.getRoleType()!=RoleType.ADMIN){
+            throw new NotFoundException("No dniAdministrador " + admId + " into the data base.");
+        }
+        persona.setIdAdministrador(adm.getIdAdministrador());
+        persona.setCelular(adm.getCelular());
+        persona.setEmailSecundario(adm.getEmailSecundario());
+        return personaRepository.save(persona);
     }
 
     @Transactional
     public void deleteAdm(Long personaId, Long admId) {
         validatePersonaId(personaId);
-        Administrador adm = adminstradorRepository.findById(admId)
+        Persona adm = personaRepository.findById(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
-        adminstradorRepository.delete(adm);
+        adm.setRoleType(RoleType.USER);
+        personaRepository.save(adm);
     }
 
     private Persona validatePersonaId(Long personaId) {

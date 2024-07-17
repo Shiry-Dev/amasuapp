@@ -1,9 +1,6 @@
 package com.lacontraloria.amasuapp.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "PERSONA")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Persona implements Serializable {
 
     @Id
@@ -47,22 +45,26 @@ public class Persona implements Serializable {
     @Column(name = "SEXO", nullable = false, length = 15)
     private String sexo;
 
-    @OneToOne(mappedBy = "persona")
-    @JsonIgnoreProperties("persona")
-//    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Administrador administrador;
+    @Column(name = "ROLETYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType = RoleType.USER;
 
-    @OneToOne(mappedBy = "persona")
-    @JsonIgnore
-    private Coordinador coordinador;
+    @Column(name = "CELULAR", length = 15)
+    private Long celular;
+
+    @Column(name = "EMAILSECUNDARIO", length = 100)
+    private String emailSecundario;
+
+    @Column(name = "IDCOORDINADOR", length = 30)
+    private String idCoordinador;
+
+    @Column(name = "IDADMINISTRADOR", length = 30)
+    private String idAdministrador;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Curso> cursos;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Alerta> alertas;
 
 }
