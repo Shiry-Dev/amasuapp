@@ -1,4 +1,4 @@
 package com.lacontraloria.amasuapp.domains;
 
-public class ObservacionAlerta {
+public enum RoleType {
 }

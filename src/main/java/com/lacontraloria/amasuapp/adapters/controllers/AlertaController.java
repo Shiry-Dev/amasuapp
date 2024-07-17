@@ -47,9 +47,10 @@ public class AlertaController {
                                                            @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
                                                            @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
                                                            @RequestParam (value = "sort", defaultValue = "idAlerta", required = false) String sort,
-                                                           @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
+                                                           @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction,
+                                                           @RequestParam (value = "cui", required = false) Long cui){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-        Page<Alerta> listAlerta = alertaServiceImp.getAllAlerta(personaId, pageRequest);
+        Page<Alerta> listAlerta = alertaServiceImp.getAllAlerta(personaId, cui, pageRequest);
         PagedModel<Alerta> pagedAlerta = new PagedModel<>(listAlerta);
         return ResponseEntity.ok().body(pagedAlerta);
     }
