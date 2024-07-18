@@ -123,4 +123,9 @@ public class VeeduriaServiceImp {
         veeduriaRepository.save(veeduria);
     }
 
+    public void deleteVeeduria(Long veeduriaId) {
+        veeduriaRepository.findById(veeduriaId)
+                .orElseThrow(() -> new NotFoundException("Veeduria not found!"));
+        veeduriaRepository.deleteById(veeduriaId);
+    }
 }

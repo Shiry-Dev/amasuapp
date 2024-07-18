@@ -73,4 +73,10 @@ public class VeeduriaController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/{veeduriaId}")
+    public ResponseEntity<Void> deleteVeeduria(@PathVariable Long veeduriaId) {
+        veeduriaServiceImp.deleteVeeduria(veeduriaId);
+        return ResponseEntity.ok().build();
+    }
+
 }
