@@ -55,16 +55,61 @@ public class Persona implements Serializable {
     @Column(name = "EMAILSECUNDARIO", length = 100)
     private String emailSecundario;
 
-    @Column(name = "IDCOORDINADOR", length = 30)
+    @Column(name = "IDCOORDINADOR", length = 30, unique = true)
     private String idCoordinador;
 
-    @Column(name = "IDADMINISTRADOR", length = 30)
+    @Column(name = "IDADMINISTRADOR", length = 30, unique = true)
     private String idAdministrador;
+
+    @Column(name = "IDMONITOR", length = 30, unique = true)
+    private String idMonitor;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Curso> cursos;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Alerta> alertas;
+
+    @Column(name = "ANIOINGRESO")
+    private LocalDate anioIngreso;
+
+    @Column(name = "REGIONINSCRIPCION", length = 100)
+    private String regionInscription;
+
+    @Column(name = "PROVINCIAINSCRIPCION", length = 100)
+    private String provinciaInscripcion;
+
+    @Column(name = "DISTRITOINSCRIPCION", length = 100)
+    private String distritoInscripcion;
+
+    @Column(name = "UBIGEOINEI", length = 100)
+    private String ubigeoInei;
+
+    @Column(name = "REGIONACTUAL", length = 100)
+    private String regionActual;
+
+    @Column(name = "PROVINCIAACTUAL", length = 100)
+    private String provinciaActual;
+
+    @Column(name = "DISTRITOACTUAL", length = 100)
+    private String distritoActual;
+
+    @Column(name = "ESTUDIOS", length = 100)
+    private String estudios;
+
+    @Column(name = "OCUPACION", length = 100)
+    private String ocupacion;
+
+    @Column(name = "CARRERA", length = 100)
+    private String carrera;
+
+    @Column(name = "EXPERIENCIA")
+    private String experiencia;
+
+    @Column(name = "PROFESIONDEPURADA")
+    private String profesionDepurada;
+
+    @Column(name = "CONVOCATORIAINGRESO")
+    private String convocatoriaIngreso;
 
 }

@@ -32,7 +32,7 @@ public class CoordinadorServiceImp {
     @Transactional(readOnly = true)
     public Persona findCoordById(Long personaId, Long coordId) {
         validatePersonaId(personaId);
-        return personaRepository.findById(coordId)
+        return personaRepository.findByDniRieniecAndRoleType(coordId, RoleType.COORD)
                 .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
     }
 
@@ -49,7 +49,7 @@ public class CoordinadorServiceImp {
         if(persona.getRoleType()!=RoleType.COORD){
             throw new NotFoundException("No dniCoordinador " + coordId + " into the data base.");
         }
-        persona.setIdAdministrador(coord.getIdAdministrador());
+        persona.setIdCoordinador(coord.getIdCoordinador());
         persona.setCelular(coord.getCelular());
         persona.setEmailSecundario(coord.getEmailSecundario());
         return personaRepository.save(persona);

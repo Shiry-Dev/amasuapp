@@ -24,8 +24,8 @@ public class CoordinadorController {
     }
 
     @PostMapping
-    public ResponseEntity<Persona> createAdm(@PathVariable Long personaId,
-                                             @RequestBody Persona reqBody) {
+    public ResponseEntity<Persona> createCoord(@PathVariable Long personaId,
+                                               @RequestBody Persona reqBody) {
         Persona coord = coordinadorServiceImp.createCoord(personaId, reqBody);
         URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -36,18 +36,18 @@ public class CoordinadorController {
     }
 
     @GetMapping("/{coordinadorId}")
-    public ResponseEntity<Persona> getAdmById(@PathVariable Long personaId,
-                                                    @PathVariable Long coordinadorId) {
+    public ResponseEntity<Persona> getCoordById(@PathVariable Long personaId,
+                                                @PathVariable Long coordinadorId) {
         Persona coord = coordinadorServiceImp.findCoordById(personaId, coordinadorId);
         return ResponseEntity.ok().body(coord);
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<Persona>> getAllAdm(@PathVariable Long personaId,
-                                                         @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
-                                                         @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
-                                                         @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
-                                                         @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
+    public ResponseEntity<PagedModel<Persona>> getAllCoord(@PathVariable Long personaId,
+                                                           @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
+                                                           @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
+                                                           @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
+                                                           @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
         Page<Persona> listCoord = coordinadorServiceImp.findAllCoord(personaId, pageRequest);
         PagedModel<Persona> pagedCoord = new PagedModel<>(listCoord);
@@ -55,16 +55,16 @@ public class CoordinadorController {
     }
 
     @PutMapping("/{coordinadorId}")
-    public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
-                                                   @PathVariable Long coordinadorId,
-                                                   @RequestBody Persona adm) {
+    public ResponseEntity<Persona> putCoordById(@PathVariable Long personaId,
+                                                @PathVariable Long coordinadorId,
+                                                @RequestBody Persona adm) {
         Persona updatedCoord =  coordinadorServiceImp.updateCoord(personaId, coordinadorId, adm);
         return ResponseEntity.ok().body(updatedCoord);
     }
 
     @DeleteMapping("/{coordinadorId}")
-    public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId,
-                                                  @PathVariable Long coordinadorId) {
+    public ResponseEntity<Void> deleteCoordById(@PathVariable Long personaId,
+                                                @PathVariable Long coordinadorId) {
         coordinadorServiceImp.deleteCoord(personaId, coordinadorId);
         return ResponseEntity.accepted().build();
     }
