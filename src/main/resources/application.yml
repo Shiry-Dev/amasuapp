@@ -1,6 +1,8 @@
 spring:
   application:
     name: "@project.artifactId@"
+    description: "@project.description@"
+    version: "@project.version@"
   datasource:
     url:
     username:

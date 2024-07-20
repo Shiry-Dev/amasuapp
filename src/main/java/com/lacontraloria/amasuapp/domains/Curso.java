@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +27,4 @@ public class Curso implements Serializable {
     @Column(name = "DESCCURSO", nullable = false)
     private String descCurso;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "DNIRENIEC", referencedColumnName = "DNIRENIEC", nullable = false)
-    private Persona persona;
 }

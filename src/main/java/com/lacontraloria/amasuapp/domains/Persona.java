@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -64,12 +65,6 @@ public class Persona implements Serializable {
     @Column(name = "IDMONITOR", length = 30, unique = true)
     private String idMonitor;
 
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Curso> cursos;
-
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Alerta> alertas;
-
     @Column(name = "ANIOINGRESO")
     private LocalDate anioIngreso;
 
@@ -111,5 +106,21 @@ public class Persona implements Serializable {
 
     @Column(name = "CONVOCATORIAINGRESO")
     private String convocatoriaIngreso;
+
+    @ManyToMany
+    @JoinTable(
+            name = "PERSONA_CURSO",
+            joinColumns = @JoinColumn(name = "DNIRENIEC"),
+            inverseJoinColumns = @JoinColumn(name = "IDCURSO")
+    )
+    private Set<Curso> cursos;
+
+    @ManyToMany
+    @JoinTable(
+            name = "PERSONA_ALERTA",
+            joinColumns = @JoinColumn(name = "DNIRENIEC"),
+            inverseJoinColumns = @JoinColumn(name = "IDALERTA")
+    )
+    private Set<Alerta> alertas;
 
 }

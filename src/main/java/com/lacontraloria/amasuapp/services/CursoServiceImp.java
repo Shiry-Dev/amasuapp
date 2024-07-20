@@ -23,47 +23,29 @@ public class CursoServiceImp {
     }
 
     @Transactional
-    public Curso createCurso(Long personaId, Curso curso){
-        Persona persona = validatePersonaId(personaId);
-        curso.setIdCurso(personaId);
-        curso.setPersona(persona);
+    public Curso createCurso(Curso curso){
         return cursoRepository.save(curso);
     }
 
     @Transactional(readOnly = true)
-    public Curso findByCursoId(Long personaId, Long cursoId) {
-        validatePersonaId(personaId);
+    public Curso findByCursoId( Long cursoId) {
         return cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new NotFoundException("No cursoId " + cursoId + " into the data base."));
     }
 
     @Transactional(readOnly = true)
-    public Page<Curso> getAllCurso(Long personaId, PageRequest pageRequest) {
-        validatePersonaId(personaId);
+    public Page<Curso> getAllCurso(PageRequest pageRequest) {
         Page<Curso> listCurso = cursoRepository.findAll(pageRequest);
         return listCurso;
     }
 
     @Transactional
-    public Curso updateCurso(Long personaId, Long cursoId, Curso curso){
-        Persona persona = validatePersonaId(personaId);
+    public Curso updateCurso(Long cursoId, Curso curso){
         Curso cursoDb = cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new NotFoundException("No cursoId " + cursoId + " into the data base."));
         curso.setIdCurso(cursoDb.getIdCurso());
-        curso.setPersona(persona);
         Curso updatedCurso = cursoRepository.save(curso);
         return updatedCurso;
     }
 
-    @Transactional
-    public void deleteCurso(Long personaId, Long cursoId) {
-        validatePersonaId(personaId);
-        Curso curso = cursoRepository.findById(cursoId)
-                .orElseThrow(() -> new NotFoundException("No cursoId " + cursoId + " into the data base."));
-        cursoRepository.delete(curso);
-    }
-
-    private Persona validatePersonaId(Long personaId) {
-        return personaRepository.findById(personaId).orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
-    }
 }

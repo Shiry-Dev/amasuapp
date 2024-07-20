@@ -1,6 +1,8 @@
 spring:
   application:
     name: "@project.artifactId@"
+    description: "@project.description@"
+    version: "@project.version@"
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:free
     username: system

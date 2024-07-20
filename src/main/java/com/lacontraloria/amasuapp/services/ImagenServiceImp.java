@@ -4,12 +4,8 @@ import com.lacontraloria.amasuapp.adapters.dto.ImagenDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.ImagenRepository;
-import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Alerta;
 import com.lacontraloria.amasuapp.domains.Imagen;
-import com.lacontraloria.amasuapp.domains.Persona;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,49 +13,41 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImagenServiceImp {
 
     private final ImagenRepository imagenRepository;
-    private final PersonaRepository personaRepository;
     private final AlertaRepository alertaRepository;
 
-    public ImagenServiceImp(ImagenRepository imagenRepository, PersonaRepository personaRepository, AlertaRepository alertaRepository) {
+    public ImagenServiceImp(ImagenRepository imagenRepository, AlertaRepository alertaRepository) {
         this.imagenRepository = imagenRepository;
-        this.personaRepository = personaRepository;
         this.alertaRepository = alertaRepository;
     }
 
     @Transactional
-    public ImagenDTO createImagen(Long personaId, Long alertaId, Imagen reqBody) {
-        Persona persona = validatePersonaId(personaId);
+    public ImagenDTO createImagen(Long alertaId, Imagen reqBody) {
         Alerta alerta = validateAlertaId(alertaId);
-        alerta.setPersona(persona);
         reqBody.setAlerta(alerta);
         imagenRepository.save(reqBody);
         return convertToDto(reqBody);
     }
 
     @Transactional(readOnly = true)
-    public ImagenDTO findByImagenId(Long personaId, Long alertaId, Long imagenId) {
-        validatePersonaId(personaId);
+    public ImagenDTO findByImagenId( Long alertaId, Long imagenId) {
         validateAlertaId(alertaId);
         Imagen imagen = imagenRepository.findById(imagenId)
                 .orElseThrow(() -> new NotFoundException("No imagenId " + imagenId + " into the data base."));
         return convertToDto(imagen);
     }
 
-    @Transactional(readOnly = true)
-    public Page<ImagenDTO> getAllImagen(Long personaId, Long alertaId, PageRequest pageRequest) {
-        validatePersonaId(personaId);
-        validateAlertaId(alertaId);
-        Page<Imagen> listImg = imagenRepository.findAll(pageRequest);
-        return listImg.map(this::convertToDto);
-    }
+//    @Transactional(readOnly = true)
+//    public Page<ImagenDTO> getAllImagen( Long alertaId, PageRequest pageRequest) {
+//        validateAlertaId(alertaId);
+//        Page<Imagen> listImg = imagenRepository.findAll(pageRequest);
+//        return listImg.map(this::convertToDto);
+//    }
 
     @Transactional
-    public ImagenDTO updateImagen(Long personaId, Long alertaId, Long imagenId, Imagen reqBody){
-        Persona persona = validatePersonaId(personaId);
+    public ImagenDTO updateImagen( Long alertaId, Long imagenId, Imagen reqBody){
         Alerta alerta = validateAlertaId(alertaId);
         Imagen imagen = imagenRepository.findById(imagenId)
                 .orElseThrow(() -> new NotFoundException("No imagenId " + imagenId + " into the data base."));
-        alerta.setPersona(persona);
         reqBody.setAlerta(alerta);
         reqBody.setIdImagen(imagen.getIdImagen());
         imagenRepository.save(reqBody);
@@ -67,16 +55,13 @@ public class ImagenServiceImp {
     }
 
     @Transactional
-    public void deleteImagen(Long personaId, Long alertaId, Long imagenId) {
-        validatePersonaId(personaId);
-        validateAlertaId(alertaId);
+    public void deleteImagen(Long alertaId, Long imagenId) {
+        Alerta alerta = validateAlertaId(alertaId);
         Imagen imagen = imagenRepository.findById(imagenId)
                 .orElseThrow(() -> new NotFoundException("No imagenId " + imagenId + " into the data base."));
+        alerta.setImagen(null);
+        alertaRepository.save(alerta);
         imagenRepository.delete(imagen);
-    }
-
-    private Persona validatePersonaId(Long personaId) {
-        return personaRepository.findById(personaId).orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
     }
 
     private Alerta validateAlertaId(Long alertaId) {

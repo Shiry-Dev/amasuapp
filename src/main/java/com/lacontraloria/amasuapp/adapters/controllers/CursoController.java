@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("v1/persona/{personaId}/curso")
+@RequestMapping("v1/curso")
 public class CursoController {
 
     private final CursoServiceImp cursoServiceImp;
@@ -24,9 +24,8 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<Curso> createCurso(@PathVariable Long personaId,
-                                             @RequestBody Curso reqBody) {
-        Curso curso = cursoServiceImp.createCurso(personaId, reqBody);
+    public ResponseEntity<Curso> createCurso(@RequestBody Curso reqBody) {
+        Curso curso = cursoServiceImp.createCurso(reqBody);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -36,36 +35,27 @@ public class CursoController {
     }
 
     @GetMapping("/{cursoId}")
-    public ResponseEntity<Curso> getCursoById(@PathVariable Long personaId,
-                                              @PathVariable Long cursoId) {
-        Curso curso = cursoServiceImp.findByCursoId(personaId, cursoId);
+    public ResponseEntity<Curso> getCursoById(@PathVariable Long cursoId) {
+        Curso curso = cursoServiceImp.findByCursoId(cursoId);
         return ResponseEntity.ok().body(curso);
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<Curso>> getAllCurso(@PathVariable Long personaId,
-                                                           @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
-                                                           @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
-                                                           @RequestParam (value = "sort", defaultValue = "idCurso", required = false) String sort,
-                                                           @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
+    public ResponseEntity<PagedModel<Curso>> getAllCurso(@RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
+                                                         @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
+                                                         @RequestParam (value = "sort", defaultValue = "idCurso", required = false) String sort,
+                                                         @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-        Page<Curso> listCurso = cursoServiceImp.getAllCurso(personaId, pageRequest);
+        Page<Curso> listCurso = cursoServiceImp.getAllCurso(pageRequest);
         PagedModel<Curso> pagedPersona = new PagedModel<>(listCurso);
         return ResponseEntity.ok().body(pagedPersona);
     }
 
     @PutMapping("/{cursoId}")
-    public ResponseEntity<Curso> putCursoId(@PathVariable Long personaId,
-                                                 @PathVariable Long cursoId,
-                                                 @RequestBody Curso curso) {
-        Curso updatedCurso =  cursoServiceImp.updateCurso(personaId, cursoId, curso);
+    public ResponseEntity<Curso> putCursoId(@PathVariable Long cursoId,
+                                            @RequestBody Curso curso) {
+        Curso updatedCurso =  cursoServiceImp.updateCurso(cursoId, curso);
         return ResponseEntity.ok().body(updatedCurso);
     }
 
-    @DeleteMapping("/{cursoId}")
-    public ResponseEntity<Void> deleteCurso(@PathVariable Long personaId,
-                                            @PathVariable Long cursoId) {
-        cursoServiceImp.deleteCurso(personaId, cursoId);
-        return ResponseEntity.accepted().build();
-    }
 }

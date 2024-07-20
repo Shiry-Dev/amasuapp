@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/persona")
@@ -54,7 +55,7 @@ public class PersonaController {
     @PutMapping("/{personaId}")
     public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
                                                    @RequestBody Persona persona) {
-        Persona updatedPersona =  personaServiceImp.updatePersona(persona);
+        Persona updatedPersona =  personaServiceImp.updatePersona(personaId, persona);
         return ResponseEntity.ok().body(updatedPersona);
     }
 
@@ -62,5 +63,19 @@ public class PersonaController {
     public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId) {
         personaServiceImp.deletePersona(personaId);
         return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/{personaId}/curso")
+    public ResponseEntity<Void> assignCurso(@PathVariable Long personaId,
+                                            @RequestBody List<Long> cursoIds) {
+        personaServiceImp.assignCursoToPersona(personaId, cursoIds);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{personaId}/alerta")
+    public ResponseEntity<Void> assignAlerta(@PathVariable Long personaId,
+                                             @RequestBody List<Long> cursoIds) {
+        personaServiceImp.assignAlertaToPersona(personaId, cursoIds);
+        return ResponseEntity.ok().build();
     }
 }

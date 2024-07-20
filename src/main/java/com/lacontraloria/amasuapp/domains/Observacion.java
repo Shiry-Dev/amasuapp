@@ -26,9 +26,8 @@ public class Observacion implements Serializable {
     @Column(name = "DESCOBSERVACION", nullable = false)
     private String descObservacion;
 
+    @ManyToMany(mappedBy = "observaciones", fetch = FetchType.LAZY)
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "IDALERTA", referencedColumnName = "IDALERTA", nullable = false)
-    private Alerta alerta;
+    private Set<Alerta> alertas;
 
 }

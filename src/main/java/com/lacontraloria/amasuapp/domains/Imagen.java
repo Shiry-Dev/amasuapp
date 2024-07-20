@@ -1,7 +1,6 @@
 package com.lacontraloria.amasuapp.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,9 +38,9 @@ public class Imagen implements Serializable {
     @Column(name = "IMAGEN4")
     private byte[] imagen4;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "IDALERTA", referencedColumnName = "IDALERTA", foreignKey = @ForeignKey(name = "FK_ALERTA_IMAGEN"))
-    @JsonIgnoreProperties("imagen")
+    @JsonIgnore
     private Alerta alerta;
 
 }

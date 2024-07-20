@@ -75,7 +75,7 @@ public class VeeduriaServiceImp {
     public void postulateMonitorsToVeeduria(Long veeduriaId, List<Long> monitorIds) {
         Veeduria veeduria = veeduriaRepository.findById(veeduriaId)
                 .orElseThrow(() -> new NotFoundException("Veeduria not found!"));
-        Set<Persona> postulados = new HashSet<>();
+        Set<Persona> postulados = new HashSet<>(veeduria.getMonitoresPostulados());
         for (Long monitorId : monitorIds) {
             Persona persona = personaRepository.findById(monitorId)
                     .orElseThrow(() -> new NotFoundException("Monitor not found!"));

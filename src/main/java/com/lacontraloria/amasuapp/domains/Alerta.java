@@ -4,20 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "ALERTA")
 public class Alerta implements Serializable {
@@ -37,43 +36,35 @@ public class Alerta implements Serializable {
     @Column(name = "COMENTARIOALERTA")
     private String comentarioAlerta;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "DNIRENIEC", referencedColumnName = "DNIRENIEC", nullable = false)
-    private Persona persona;
-
-    @OneToMany(mappedBy = "alerta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "alerta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<Observacion> observaciones;
-
-    @OneToOne(mappedBy = "alerta")
-//    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @JsonIgnoreProperties("alerta")
     private Imagen imagen;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "alertas", fetch = FetchType.LAZY)
+    private Set<Persona> personas = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "ALERTA_OBSERVACION",
+            joinColumns = @JoinColumn(name = "IDALERTA"),
+            inverseJoinColumns = @JoinColumn(name = "IDOBSERVACION")
+    )
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Set<Observacion> observaciones;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Alerta alerta = (Alerta) o;
-        return Objects.equals(idAlerta, alerta.idAlerta) && Objects.equals(cui, alerta.cui) && Objects.equals(fechaCreacion, alerta.fechaCreacion) && Objects.equals(comentarioAlerta, alerta.comentarioAlerta) && Objects.equals(persona, alerta.persona) && Objects.equals(observaciones, alerta.observaciones);
+        return idAlerta != null && idAlerta.equals(alerta.idAlerta);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAlerta, cui, fechaCreacion, comentarioAlerta, persona, observaciones);
+        return getClass().hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Alerta{" +
-                "idAlerta=" + idAlerta +
-                ", cui=" + cui +
-                ", fechaCreacion=" + fechaCreacion +
-                ", comentarioAlerta='" + comentarioAlerta + '\'' +
-                ", persona=" + persona +
-                ", observaciones=" + observaciones +
-                '}';
-    }
+
 }
