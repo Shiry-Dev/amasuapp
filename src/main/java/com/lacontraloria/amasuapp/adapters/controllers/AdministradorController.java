@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("v1/persona/{personaId}/administrador")
+@RequestMapping("/v1")
 public class AdministradorController {
 
     private final AdministradorServiceImp administradorServiceImp;
@@ -22,7 +22,7 @@ public class AdministradorController {
         this.administradorServiceImp = administradorServiceImp;
     }
 
-    @PostMapping
+    @PostMapping("/persona/{personaId}/administrador")
     public ResponseEntity<Persona> createAdm(@PathVariable Long personaId,
                                              @RequestBody Persona reqBody) {
         Persona adm = administradorServiceImp.createAdm(personaId, reqBody);
@@ -34,37 +34,33 @@ public class AdministradorController {
         return ResponseEntity.created(uri).body(adm);
     }
 
-    @GetMapping("/{administradorId}")
-    public ResponseEntity<Persona> getAdmById(@PathVariable Long personaId,
-                                                    @PathVariable Long administradorId) {
-        Persona adm = administradorServiceImp.findAdminById(personaId, administradorId);
+    @GetMapping("/administrador/{administradorId}")
+    public ResponseEntity<Persona> getAdmById(@PathVariable String administradorId) {
+        Persona adm = administradorServiceImp.findAdminById(administradorId);
         return ResponseEntity.ok().body(adm);
     }
 
-    @GetMapping
-    public ResponseEntity<PagedModel<Persona>> getAllAdm(@PathVariable Long personaId,
-                                                         @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
+    @GetMapping("/administrador")
+    public ResponseEntity<PagedModel<Persona>> getAllAdm(@RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
                                                          @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
                                                          @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
                                                          @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-        Page<Persona> listAdm = administradorServiceImp.findAllAdm(personaId, pageRequest);
+        Page<Persona> listAdm = administradorServiceImp.findAllAdm(pageRequest);
         PagedModel<Persona> pagedAdm = new PagedModel<>(listAdm);
         return ResponseEntity.ok().body(pagedAdm);
     }
 
-    @PutMapping("/{administradorId}")
-    public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
-                                                   @PathVariable Long administradorId,
+    @PutMapping("/administrador/{administradorId}")
+    public ResponseEntity<Persona> putPersonalById(@PathVariable String administradorId,
                                                    @RequestBody Persona adm) {
-        Persona updatedAdm =  administradorServiceImp.updateAdm(personaId, administradorId, adm);
+        Persona updatedAdm =  administradorServiceImp.updateAdm(administradorId, adm);
         return ResponseEntity.ok().body(updatedAdm);
     }
 
-    @DeleteMapping("/{administradorId}")
-    public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId,
-                                                  @PathVariable Long administradorId) {
-        administradorServiceImp.deleteAdm(personaId, administradorId);
+    @DeleteMapping("/administrador/{administradorId}")
+    public ResponseEntity<Void> deletePersonaById(@PathVariable String administradorId) {
+        administradorServiceImp.deleteAdm(administradorId);
         return ResponseEntity.accepted().build();
     }
 }

@@ -30,36 +30,38 @@ public class CoordinadorServiceImp {
     }
 
     @Transactional(readOnly = true)
-    public Persona findCoordById(Long personaId, Long coordId) {
-        validatePersonaId(personaId);
-        return personaRepository.findByDniRieniecAndRoleType(coordId, RoleType.COORD)
+    public Persona findCoordById(String coordId) {
+//        validatePersonaId(personaId);
+        return personaRepository.findPersonaByIdCoordinador(coordId)
                 .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
     }
 
     @Transactional(readOnly = true)
-    public Page<Persona> findAllCoord(Long personaId, PageRequest pageRequest) {
-        validatePersonaId(personaId);
+    public Page<Persona> findAllCoord(PageRequest pageRequest) {
         Page<Persona> listCoord = personaRepository.findAllByRoleType(RoleType.COORD, pageRequest);
         return listCoord;
     }
 
     @Transactional
-    public Persona updateCoord(Long personaId, Long coordId, Persona coord){
-        Persona persona = validatePersonaId(personaId);
+    public Persona updateCoord(String coordId, Persona coord){
+        Persona persona = personaRepository.findPersonaByIdCoordinador(coordId)
+                .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
         if(persona.getRoleType()!=RoleType.COORD){
             throw new NotFoundException("No dniCoordinador " + coordId + " into the data base.");
         }
-        persona.setIdCoordinador(coord.getIdCoordinador());
+        persona.setIdCoordinador(coordId);
         persona.setCelular(coord.getCelular());
         persona.setEmailSecundario(coord.getEmailSecundario());
         return personaRepository.save(persona);
     }
 
     @Transactional
-    public void deleteCoord(Long personaId, Long coordId) {
-        validatePersonaId(personaId);
-        Persona coord = personaRepository.findById(coordId)
+    public void deleteCoord(String coordId) {
+        Persona coord = personaRepository.findPersonaByIdCoordinador(coordId)
                 .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
+        coord.setIdCoordinador(null);
+        coord.setEmailSecundario(null);
+        coord.setCelular(null);
         coord.setRoleType(RoleType.USER);
         personaRepository.save(coord);
     }

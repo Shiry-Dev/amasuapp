@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("v1/persona/{personaId}/monitor")
+@RequestMapping("/v1")
 public class MonitorController {
 
     private final MonitorServiceImp monitorServiceImp;
@@ -23,7 +23,7 @@ public class MonitorController {
         this.monitorServiceImp = monitorServiceImp;
     }
 
-    @PostMapping
+    @PostMapping("/persona/{personaId}/monitor")
     public ResponseEntity<Persona> createAdm(@PathVariable Long personaId,
                                              @RequestBody Persona reqBody) {
         Persona monitor = monitorServiceImp.createMonitor(personaId, reqBody);
@@ -35,50 +35,45 @@ public class MonitorController {
         return ResponseEntity.created(uri).body(monitor);
     }
 
-    @GetMapping("/{monitorId}")
-    public ResponseEntity<Persona> getMonitorById(@PathVariable Long personaId,
-                                                  @PathVariable Long monitorId) {
-        Persona monitor = monitorServiceImp.findMonitorById(personaId, monitorId);
+    @GetMapping("/monitor/{monitorId}")
+    public ResponseEntity<Persona> getMonitorById(@PathVariable String monitorId) {
+        Persona monitor = monitorServiceImp.findMonitorById(monitorId);
         return ResponseEntity.ok().body(monitor);
     }
 
-    @GetMapping
-    public ResponseEntity<PagedModel<Persona>> getAllMonitor(@PathVariable Long personaId,
-                                                             @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
+    @GetMapping("/monitor")
+    public ResponseEntity<PagedModel<Persona>> getAllMonitor(@RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
                                                              @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
                                                              @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
                                                              @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-        Page<Persona> listMonitor = monitorServiceImp.findAllMonitor(personaId, pageRequest);
+        Page<Persona> listMonitor = monitorServiceImp.findAllMonitor(pageRequest);
         PagedModel<Persona> pagedMonitor = new PagedModel<>(listMonitor);
         return ResponseEntity.ok().body(pagedMonitor);
     }
 
-    @GetMapping("/distrito")
-    public ResponseEntity<PagedModel<Persona>> getAllMonitorByDistrito(@PathVariable Long personaId,
-                                                                       @RequestParam (value = "distritoActual") String distritoActual,
+    @GetMapping("/monitor/distrito")
+    public ResponseEntity<PagedModel<Persona>> getAllMonitorByDistrito(@RequestParam (value = "distritoActual") String distritoActual,
                                                                        @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
                                                                        @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
                                                                        @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
                                                                        @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-        Page<Persona> listMonitor = monitorServiceImp.findAllMonitorByDistrito(personaId, distritoActual, pageRequest);
+        Page<Persona> listMonitor = monitorServiceImp.findAllMonitorByDistrito(distritoActual, pageRequest);
         PagedModel<Persona> pagedMonitor = new PagedModel<>(listMonitor);
         return ResponseEntity.ok().body(pagedMonitor);
     }
 
-    @PutMapping("/{monitorId}")
-    public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
-                                                   @PathVariable Long monitorId,
-                                                   @RequestBody Persona adm) {
-        Persona updatedMonitor = monitorServiceImp.updateMonitor(personaId, monitorId, adm);
+    @PutMapping("/monitor/{monitorId}")
+    public ResponseEntity<Persona> putMonitorById(@PathVariable String monitorId,
+                                                  @RequestBody Persona monitor) {
+        Persona updatedMonitor = monitorServiceImp.updateMonitor(monitorId, monitor);
         return ResponseEntity.ok().body(updatedMonitor);
     }
 
-    @DeleteMapping("/{monitorId}")
-    public ResponseEntity<Void> deletePersonaById(@PathVariable Long personaId,
-                                                  @PathVariable Long monitorId) {
-        monitorServiceImp.deleteMonitor(personaId, monitorId);
+    @DeleteMapping("/monitor/{monitorId}")
+    public ResponseEntity<Void> deleteMonitorById(@PathVariable String monitorId) {
+        monitorServiceImp.deleteMonitor(monitorId);
         return ResponseEntity.accepted().build();
     }
 }

@@ -30,36 +30,38 @@ public class AdministradorServiceImp {
     }
 
     @Transactional(readOnly = true)
-    public Persona findAdminById(Long personaId, Long admId) {
-        validatePersonaId(personaId);
-        return personaRepository.findByDniRieniecAndRoleType(admId, RoleType.ADMIN)
+    public Persona findAdminById(String admId) {
+//        validatePersonaId(personaId);
+        return personaRepository.findPersonaByIdAdministrador(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
     }
 
     @Transactional(readOnly = true)
-    public Page<Persona> findAllAdm(Long personaId, PageRequest pageRequest) {
-        validatePersonaId(personaId);
+    public Page<Persona> findAllAdm(PageRequest pageRequest) {
         Page<Persona> listAdm = personaRepository.findAllByRoleType(RoleType.ADMIN, pageRequest);
         return listAdm;
     }
 
     @Transactional
-    public Persona updateAdm(Long personaId, Long admId, Persona adm){
-        Persona persona = validatePersonaId(personaId);
+    public Persona updateAdm(String admId, Persona adm){
+        Persona persona = personaRepository.findPersonaByIdAdministrador(admId)
+                .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
         if(persona.getRoleType()!=RoleType.ADMIN){
             throw new NotFoundException("No dniAdministrador " + admId + " into the data base.");
         }
-        persona.setIdAdministrador(adm.getIdAdministrador());
+        persona.setIdAdministrador(admId);
         persona.setCelular(adm.getCelular());
         persona.setEmailSecundario(adm.getEmailSecundario());
         return personaRepository.save(persona);
     }
 
     @Transactional
-    public void deleteAdm(Long personaId, Long admId) {
-        validatePersonaId(personaId);
-        Persona adm = personaRepository.findById(admId)
+    public void deleteAdm(String admId) {
+        Persona adm = personaRepository.findPersonaByIdAdministrador(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
+        adm.setIdAdministrador(null);
+        adm.setEmailSecundario(null);
+        adm.setCelular(null);
         adm.setRoleType(RoleType.USER);
         personaRepository.save(adm);
     }

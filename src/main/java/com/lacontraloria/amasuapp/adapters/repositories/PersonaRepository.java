@@ -12,6 +12,9 @@ import java.util.Optional;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
+    Optional<Persona> findPersonaByIdAdministrador(String idAdministrador);
+    Optional<Persona> findPersonaByIdCoordinador(String idCoordinador);
+    Optional<Persona> findPersonaByIdMonitor(String idMonitor);
     Page<Persona> findAllByRoleType(RoleType roleType, PageRequest pageRequest);
     Page<Persona> findAllByRoleTypeAndDistritoActual(RoleType roleType, String distrito, PageRequest pageRequest);
     Optional<Persona> findByDniRieniecAndRoleType(Long dniRienic, RoleType roleType);
