@@ -14,15 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/veedurias")
+@RequestMapping("/v1")
 public class VeeduriaController {
 
     @Autowired
     private VeeduriaServiceImp veeduriaServiceImp;
 
-    @PostMapping
-    public ResponseEntity<Veeduria> createVeeduria(@RequestBody Veeduria veeduria) {
-        Veeduria createdVeeduria = veeduriaServiceImp.createVeeduria(veeduria);
+    @PostMapping("/persona/{personaId}/veeduria")
+    public ResponseEntity<Veeduria> createVeeduria(@PathVariable Long personaId,
+                                                   @RequestBody Veeduria veeduria) {
+        Veeduria createdVeeduria = veeduriaServiceImp.createVeeduria(personaId, veeduria);
         return ResponseEntity.ok(createdVeeduria);
     }
 
@@ -65,6 +66,18 @@ public class VeeduriaController {
         Page<Veeduria> veedurias = veeduriaServiceImp.getAllVeedurias(pageRequest);
         PagedModel<Veeduria> pagedVeedurias = new PagedModel<>(veedurias);
         return ResponseEntity.ok().body(pagedVeedurias);
+    }
+
+    @PutMapping("/{veeduriaId}")
+    public ResponseEntity<Veeduria> updateVeeduria(@PathVariable Long veeduriaId, @RequestBody Veeduria veeduria) {
+        Veeduria updatedVeeduria = veeduriaServiceImp.updateVeeduria(veeduriaId, veeduria);
+        return ResponseEntity.ok(updatedVeeduria);
+    }
+
+    @DeleteMapping("/{veeduriaId}/monitores/{monitorId}")
+    public ResponseEntity<Void> deleteMonitorPostulado(@PathVariable Long veeduriaId, @PathVariable Long monitorId) {
+        veeduriaServiceImp.removeMonitorPostulado(veeduriaId, monitorId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{veeduriaId}/monitores/{monitorId}")

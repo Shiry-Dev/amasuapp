@@ -29,7 +29,8 @@ public class VeeduriaServiceImp {
     private PersonaRepository personaRepository;
 
     @Transactional
-    public Veeduria createVeeduria(Veeduria veeduria) {
+    public Veeduria createVeeduria(Long personaId, Veeduria veeduria) {
+        veeduria.setDniResponasable(personaId);
         veeduria.setFechaCreacion(LocalDateTime.now());
         return veeduriaRepository.save(veeduria);
     }
@@ -127,5 +128,25 @@ public class VeeduriaServiceImp {
         veeduriaRepository.findById(veeduriaId)
                 .orElseThrow(() -> new NotFoundException("Veeduria not found!"));
         veeduriaRepository.deleteById(veeduriaId);
+    }
+
+    public void removeMonitorPostulado(Long veeduriaId, Long monitorId) {
+        Veeduria veeduria = veeduriaRepository.findById(veeduriaId)
+                .orElseThrow(() -> new NotFoundException("Veeduria not found!"));
+        Persona monitor = personaRepository.findById(monitorId)
+                .orElseThrow(() -> new NotFoundException("Monitor not found!"));
+        Set<Persona> monitores = new HashSet<>(veeduria.getMonitoresPostulados());
+        monitores.remove(monitor);
+        veeduria.setMonitoresPostulados(monitores);
+        veeduriaRepository.save(veeduria);
+    }
+
+    public Veeduria updateVeeduria(Long veeduriaId, Veeduria veeduria) {
+        return veeduriaRepository.findById(veeduriaId)
+                .map(v -> {
+                    v.setFechaVeeduria(veeduria.getFechaVeeduria());
+                    return veeduriaRepository.save(v);
+                })
+                .orElseThrow(() -> new NotFoundException("Veeduria not found!"));
     }
 }
