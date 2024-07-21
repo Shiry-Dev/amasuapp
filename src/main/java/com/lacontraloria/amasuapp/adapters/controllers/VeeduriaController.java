@@ -74,13 +74,13 @@ public class VeeduriaController {
         return ResponseEntity.ok(updatedVeeduria);
     }
 
-    @DeleteMapping("/{veeduriaId}/monitores/{monitorId}")
+    @DeleteMapping("/{veeduriaId}/monitores/postulado/{monitorId}")
     public ResponseEntity<Void> deleteMonitorPostulado(@PathVariable Long veeduriaId, @PathVariable Long monitorId) {
         veeduriaServiceImp.removeMonitorPostulado(veeduriaId, monitorId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{veeduriaId}/monitores/{monitorId}")
+    @DeleteMapping("/{veeduriaId}/monitores/agregado/{monitorId}")
     public ResponseEntity<Void> deleteMonitorFromVeeduria(@PathVariable Long veeduriaId, @PathVariable Long monitorId) {
         veeduriaServiceImp.removeMonitorFromVeeduria(veeduriaId, monitorId);
         return ResponseEntity.ok().build();
