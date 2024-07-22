@@ -30,7 +30,7 @@ public class VeeduriaServiceImp {
 
     @Transactional
     public Veeduria createVeeduria(Long personaId, Veeduria veeduria) {
-        veeduria.setDniResponasable(personaId);
+        veeduria.setDniResponsable(personaId);
         veeduria.setFechaCreacion(LocalDateTime.now());
         return veeduriaRepository.save(veeduria);
     }

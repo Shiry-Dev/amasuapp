@@ -49,6 +49,12 @@ public class PersonaServiceImp {
         return listPersona;
     }
 
+    @Transactional(readOnly = true)
+    public Page<Persona> getAllUserPersona(PageRequest pageRequest) {
+        Page<Persona> listPersona = personaRepository.findAllByRoleType(RoleType.USER, pageRequest);
+        return listPersona;
+    }
+
     @Transactional
     public Persona updatePersona(Long personaId, Persona persona){
         Persona validPersona = personaRepository.findById(personaId)

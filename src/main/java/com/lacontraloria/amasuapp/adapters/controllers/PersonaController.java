@@ -52,6 +52,16 @@ public class PersonaController {
         return ResponseEntity.ok().body(pagedPersona);
     }
 
+    @GetMapping
+    public ResponseEntity<PagedModel<Persona>> getAllUserPersona(@RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
+                                                                 @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
+                                                                 @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
+                                                                 @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
+        Page<Persona> listPersona = personaServiceImp.getAllUserPersona(pageRequest);
+        PagedModel<Persona> pagedPersona = new PagedModel<>(listPersona);
+        return ResponseEntity.ok().body(pagedPersona);
+    }
     @PutMapping("/{personaId}")
     public ResponseEntity<Persona> putPersonalById(@PathVariable Long personaId,
                                                    @RequestBody Persona persona) {

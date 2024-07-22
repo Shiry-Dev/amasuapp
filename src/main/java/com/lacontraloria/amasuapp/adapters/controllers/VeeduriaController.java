@@ -33,31 +33,31 @@ public class VeeduriaController {
 //        return ResponseEntity.ok(updatedVeeduria);
 //    }
 
-    @GetMapping("/{veeduriaId}")
+    @GetMapping("/veedurias/{veeduriaId}")
     public ResponseEntity<Veeduria> getVeeduriaById(@PathVariable Long veeduriaId) {
         Veeduria veeduria = veeduriaServiceImp.getVeeduriaById(veeduriaId);
         return ResponseEntity.ok().body(veeduria);
     }
 
-    @GetMapping("/{veeduriaId}/monitores")
+    @GetMapping("/veedurias/{veeduriaId}/monitores")
     public ResponseEntity<List<Persona>> getMonitorsByVeeduriaId(@PathVariable Long veeduriaId) {
         List<Persona> monitors = veeduriaServiceImp.getMonitorsByVeeduriaId(veeduriaId);
         return ResponseEntity.ok().body(monitors);
     }
 
-    @PostMapping("/{veeduriaId}/monitores/postulate")
+    @PostMapping("/veedurias/{veeduriaId}/monitores/postulate")
     public ResponseEntity<Void> postulateMonitors(@PathVariable Long veeduriaId, @RequestBody List<Long> monitorIds) {
         veeduriaServiceImp.postulateMonitorsToVeeduria(veeduriaId, monitorIds);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{veeduriaId}/monitores/asignado")
+    @PostMapping("/veedurias/{veeduriaId}/monitores/asignado")
     public ResponseEntity<Void> assignMonitors(@PathVariable Long veeduriaId, @RequestBody List<Long> monitorIds) {
         veeduriaServiceImp.assignMonitorsToVeeduria(veeduriaId, monitorIds);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping("/veedurias")
     public ResponseEntity<PagedModel<Veeduria>> getAllVeedurias(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
                                                 @RequestParam(value = "sort", defaultValue = "fechaVeeduria") String sort,
@@ -68,25 +68,26 @@ public class VeeduriaController {
         return ResponseEntity.ok().body(pagedVeedurias);
     }
 
-    @PutMapping("/{veeduriaId}")
+    @PutMapping("/veedurias/{veeduriaId}")
     public ResponseEntity<Veeduria> updateVeeduria(@PathVariable Long veeduriaId, @RequestBody Veeduria veeduria) {
         Veeduria updatedVeeduria = veeduriaServiceImp.updateVeeduria(veeduriaId, veeduria);
-        return ResponseEntity.ok(updatedVeeduria);
+        return ResponseEntity.ok().body(updatedVeeduria);
     }
 
-    @DeleteMapping("/{veeduriaId}/monitores/postulado/{monitorId}")
+
+    @DeleteMapping("/veedurias/{veeduriaId}/monitores/postulado/{monitorId}")
     public ResponseEntity<Void> deleteMonitorPostulado(@PathVariable Long veeduriaId, @PathVariable Long monitorId) {
         veeduriaServiceImp.removeMonitorPostulado(veeduriaId, monitorId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{veeduriaId}/monitores/agregado/{monitorId}")
+    @DeleteMapping("/veedurias/{veeduriaId}/monitores/asignado/{monitorId}")
     public ResponseEntity<Void> deleteMonitorFromVeeduria(@PathVariable Long veeduriaId, @PathVariable Long monitorId) {
         veeduriaServiceImp.removeMonitorFromVeeduria(veeduriaId, monitorId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{veeduriaId}")
+    @DeleteMapping("/veedurias/{veeduriaId}")
     public ResponseEntity<Void> deleteVeeduria(@PathVariable Long veeduriaId) {
         veeduriaServiceImp.deleteVeeduria(veeduriaId);
         return ResponseEntity.ok().build();
