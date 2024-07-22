@@ -52,7 +52,7 @@ public class PersonaController {
         return ResponseEntity.ok().body(pagedPersona);
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<PagedModel<Persona>> getAllUserPersona(@RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
                                                                  @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
                                                                  @RequestParam (value = "sort", defaultValue = "dniRieniec", required = false) String sort,
