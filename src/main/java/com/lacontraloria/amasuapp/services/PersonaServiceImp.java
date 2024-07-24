@@ -46,8 +46,8 @@ public class PersonaServiceImp {
                     throw new IllegalArgumentException("emailPrincipal " + person.getEmailPrincipal() + " already exists.");
                 });
 
-//        String encryptedPassword = new BCryptPasswordEncoder().encode(person.getPassword());
-//        person.setPassword(encryptedPassword);
+        String encryptedPassword = new BCryptPasswordEncoder().encode(person.getPassword());
+        person.setPassword(encryptedPassword);
         person.setRoleType(RoleType.USER);
         return personaRepository.save(person);
     }
@@ -79,7 +79,9 @@ public class PersonaServiceImp {
         validPersona.setNombres(persona.getNombres());
         validPersona.setFechaNacimiento(persona.getFechaNacimiento());
         validPersona.setEmailPrincipal(persona.getEmailPrincipal());
-        validPersona.setPassword(persona.getPassword());
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(persona.getPassword());
+        validPersona.setPassword(encryptedPassword);
         Persona updatedPersona = personaRepository.save(validPersona);
         return updatedPersona;
     }
