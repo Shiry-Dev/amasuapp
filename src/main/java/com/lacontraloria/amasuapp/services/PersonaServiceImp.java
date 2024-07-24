@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.AuthDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.CursoRepository;
@@ -10,6 +11,7 @@ import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.domains.RoleType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +33,21 @@ public class PersonaServiceImp {
     }
 
 
+
+
     @Transactional
     public Persona createPersona(Persona person){
+        personaRepository.findById(person.getDniRieniec())
+                .ifPresent(persona -> {
+                    throw new IllegalArgumentException("dniRieniec " + person.getDniRieniec() + " already exists.");
+                });
+        personaRepository.findByEmailPrincipal(person.getEmailPrincipal())
+                .ifPresent(persona -> {
+                    throw new IllegalArgumentException("emailPrincipal " + person.getEmailPrincipal() + " already exists.");
+                });
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(person.getPassword());
+        person.setPassword(encryptedPassword);
         person.setRoleType(RoleType.USER);
         return personaRepository.save(person);
     }
@@ -64,7 +79,9 @@ public class PersonaServiceImp {
         validPersona.setNombres(persona.getNombres());
         validPersona.setFechaNacimiento(persona.getFechaNacimiento());
         validPersona.setEmailPrincipal(persona.getEmailPrincipal());
-        validPersona.setPassword(persona.getPassword());
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(persona.getPassword());
+        validPersona.setPassword(encryptedPassword);
         Persona updatedPersona = personaRepository.save(validPersona);
         return updatedPersona;
     }
