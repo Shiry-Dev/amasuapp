@@ -23,7 +23,7 @@ public class ObservacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Observacion> createPersona(@RequestBody Observacion reqBody) {
+    public ResponseEntity<Observacion> createObservacion(@RequestBody Observacion reqBody) {
         Observacion observacion = observacionServiceImp.createObservacion(reqBody);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
