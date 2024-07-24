@@ -3,13 +3,18 @@ package com.lacontraloria.amasuapp.domains;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,10 +24,10 @@ import java.util.Set;
 @Entity
 @Table(name = "PERSONA")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Persona implements Serializable {
+public class Persona implements Serializable, UserDetails {
 
     @Id
-    @Column(name = "DNIRENIEC", length = 8)
+    @Column(name = "DNIRENIEC", length = 8, unique = true)
     private Long dniRieniec;
 
     @Column(name = "PATERNO", nullable = false, length = 100)
@@ -37,7 +42,7 @@ public class Persona implements Serializable {
     @Column(name = "FECHANACIMIENTO", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(name = "EMAILPRINCIPAL", nullable = false, length = 100)
+    @Column(name = "EMAILPRINCIPAL", nullable = false, length = 100, unique = true)
     private String emailPrincipal;
 
     @Column(name = "PASSWORD", nullable = false, length = 100)
@@ -123,4 +128,42 @@ public class Persona implements Serializable {
     )
     private Set<Alerta> alertas;
 
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(roleType.equals(RoleType.ADMIN)) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else if (roleType.equals(RoleType.COORD)) return List.of(new SimpleGrantedAuthority("ROLE_COORDINATOR"), new SimpleGrantedAuthority("ROLE_USER"));
+        else if (roleType.equals(RoleType.MONITOR)) return List.of(new SimpleGrantedAuthority("ROLE_MONITOR"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @JsonIgnore
+    @Override
+    public String getUsername() {
+        return emailPrincipal;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 }

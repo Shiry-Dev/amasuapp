@@ -18,4 +18,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     Page<Persona> findAllByRoleType(RoleType roleType, PageRequest pageRequest);
     Page<Persona> findAllByRoleTypeAndDistritoActual(RoleType roleType, String distrito, PageRequest pageRequest);
     Optional<Persona> findByDniRieniecAndRoleType(Long dniRienic, RoleType roleType);
+
+    Optional<Persona> findByEmailPrincipal(String emailPrincipal);
 }
