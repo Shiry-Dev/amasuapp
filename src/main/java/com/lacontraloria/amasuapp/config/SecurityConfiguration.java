@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         //persona
                         .requestMatchers(HttpMethod.POST, "/v1/persona/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/persona").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/persona/{personaId}").hasAnyRole("ADMIN", "COORD", "MONITOR", "USER")
+                        .requestMatchers(HttpMethod.GET, "/v1/persona/{personaId}").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.GET, "/v1/persona/").hasAnyRole("ADMIN", "COORD")
                         .requestMatchers(HttpMethod.GET, "/v1/persona/users").hasAnyRole("ADMIN", "COORD")
                         .requestMatchers(HttpMethod.PUT, "/v1/persona/{personaId}").hasAnyRole("ADMIN", "COORD", "MONITOR", "USER")
