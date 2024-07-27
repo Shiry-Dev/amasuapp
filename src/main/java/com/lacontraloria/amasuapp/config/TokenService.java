@@ -23,7 +23,7 @@ public class TokenService {
             if(persona.getRoleType().equals(RoleType.USER)) {
                 String token = JWT.create()
                         .withIssuer("amasuapp")
-                        .withClaim("emailPrincipal", persona.getEmailPrincipal())
+                        .withSubject(persona.getEmailPrincipal())
                         .withClaim("dniReniec", persona.getDniRieniec().toString())
                         .withClaim("roleType", persona.getRoleType().name())
                         .withExpiresAt(Instant.now().plusSeconds(1000))
@@ -32,7 +32,7 @@ public class TokenService {
             } else if (persona.getRoleType().equals(RoleType.ADMIN)) {
                 String token = JWT.create()
                         .withIssuer("amasuapp")
-                        .withClaim("emailPrincipal", persona.getEmailPrincipal())
+                        .withSubject(persona.getEmailPrincipal())
                         .withClaim("idAdministrador", persona.getIdAdministrador().toString())
                         .withClaim("roleType", persona.getRoleType().name())
                         .withExpiresAt(Instant.now().plusSeconds(1000))
@@ -41,7 +41,7 @@ public class TokenService {
             } else if (persona.getRoleType().equals(RoleType.COORD)) {
                 String token = JWT.create()
                         .withIssuer("amasuapp")
-                        .withClaim("emailPrincipal", persona.getEmailPrincipal())
+                        .withSubject(persona.getEmailPrincipal())
                         .withClaim("idCoordinador", persona.getIdCoordinador().toString())
                         .withClaim("roleType", persona.getRoleType().name())
                         .withExpiresAt(Instant.now().plusSeconds(1000))
@@ -50,7 +50,7 @@ public class TokenService {
             } else if (persona.getRoleType().equals(RoleType.MONITOR)) {
                 String token = JWT.create()
                         .withIssuer("amasuapp")
-                        .withClaim("emailPrincipal", persona.getEmailPrincipal())
+                        .withSubject(persona.getEmailPrincipal())
                         .withClaim("idMonitor", persona.getIdMonitor().toString())
                         .withClaim("roleType", persona.getRoleType().name())
                         .withExpiresAt(Instant.now().plusSeconds(1000))

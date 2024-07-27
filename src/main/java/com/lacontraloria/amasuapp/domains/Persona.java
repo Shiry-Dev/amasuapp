@@ -132,7 +132,7 @@ public class Persona implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(roleType.equals(RoleType.ADMIN)) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else if (roleType.equals(RoleType.COORD)) return List.of(new SimpleGrantedAuthority("ROLE_COORDINATOR"), new SimpleGrantedAuthority("ROLE_USER"));
+        else if (roleType.equals(RoleType.COORD)) return List.of(new SimpleGrantedAuthority("ROLE_COORD"), new SimpleGrantedAuthority("ROLE_USER"));
         else if (roleType.equals(RoleType.MONITOR)) return List.of(new SimpleGrantedAuthority("ROLE_MONITOR"), new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }

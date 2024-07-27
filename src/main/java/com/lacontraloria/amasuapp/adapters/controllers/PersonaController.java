@@ -2,6 +2,7 @@ package com.lacontraloria.amasuapp.adapters.controllers;
 
 import com.lacontraloria.amasuapp.adapters.dto.AuthDTO;
 import com.lacontraloria.amasuapp.adapters.dto.TokenDTO;
+import com.lacontraloria.amasuapp.config.AuthorizationService;
 import com.lacontraloria.amasuapp.config.TokenService;
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.*;

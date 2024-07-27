@@ -1,4 +1,4 @@
-package com.lacontraloria.amasuapp.services;
+package com.lacontraloria.amasuapp.config;
 
 import com.lacontraloria.amasuapp.adapters.dto.AuthDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;

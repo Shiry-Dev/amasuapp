@@ -32,9 +32,6 @@ public class PersonaServiceImp {
         this.alertaRepository = alertaRepository;
     }
 
-
-
-
     @Transactional
     public Persona createPersona(Persona person){
         personaRepository.findById(person.getDniRieniec())
