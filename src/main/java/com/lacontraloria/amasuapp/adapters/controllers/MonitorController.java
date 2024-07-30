@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.MonitorDTO;
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.CoordinadorServiceImp;
 import com.lacontraloria.amasuapp.services.MonitorServiceImp;
@@ -25,7 +26,7 @@ public class MonitorController {
 
     @PostMapping("/persona/{personaId}/monitor")
     public ResponseEntity<Persona> createAdm(@PathVariable Long personaId,
-                                             @RequestBody Persona reqBody) {
+                                             @RequestBody MonitorDTO reqBody) {
         Persona monitor = monitorServiceImp.createMonitor(personaId, reqBody);
         URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -66,7 +67,7 @@ public class MonitorController {
 
     @PutMapping("/monitor/{monitorId}")
     public ResponseEntity<Persona> putMonitorById(@PathVariable String monitorId,
-                                                  @RequestBody Persona monitor) {
+                                                  @RequestBody MonitorDTO monitor) {
         Persona updatedMonitor = monitorServiceImp.updateMonitor(monitorId, monitor);
         return ResponseEntity.ok().body(updatedMonitor);
     }
