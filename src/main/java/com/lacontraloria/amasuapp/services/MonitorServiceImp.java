@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.MonitorDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Persona;
@@ -20,25 +21,25 @@ public class MonitorServiceImp {
 
 
     @Transactional
-    public Persona createMonitor(Long personaId, Persona monitor){
+    public Persona createMonitor(Long personaId, MonitorDTO monitor){
         Persona persona = validatePersonaId(personaId);
-        persona.setIdMonitor(monitor.getIdMonitor());
-        persona.setAnioIngreso(monitor.getAnioIngreso());
-        persona.setRegionInscription(monitor.getRegionInscription());
-        persona.setProvinciaInscripcion(monitor.getProvinciaInscripcion());
-        persona.setDistritoInscripcion(monitor.getDistritoInscripcion());
-        persona.setUbigeoInei(monitor.getUbigeoInei());
-        persona.setRegionActual(monitor.getRegionActual());
-        persona.setProvinciaActual(monitor.getProvinciaActual());
-        persona.setDistritoActual(monitor.getDistritoActual());
-        persona.setEstudios(monitor.getEstudios());
-        persona.setOcupacion(monitor.getOcupacion());
-        persona.setCarrera(monitor.getCarrera());
-        persona.setExperiencia(monitor.getExperiencia());
-        persona.setProfesionDepurada(monitor.getProfesionDepurada());
-        persona.setConvocatoriaIngreso(monitor.getConvocatoriaIngreso());
-        persona.setEmailSecundario(monitor.getEmailSecundario());
-        persona.setCelular(monitor.getCelular());
+        persona.setIdMonitor(monitor.idMonitor());
+        persona.setAnioIngreso(monitor.anioIngreso());
+        persona.setRegionInscription(monitor.regionInscripcion());
+        persona.setProvinciaInscripcion(monitor.provinciaInscripcion());
+        persona.setDistritoInscripcion(monitor.distritoInscripcion());
+        persona.setUbigeoInei(monitor.ubigeoInei());
+        persona.setRegionActual(monitor.regionActual());
+        persona.setProvinciaActual(monitor.provinciaActual());
+        persona.setDistritoActual(monitor.distritoActual());
+        persona.setEstudios(monitor.estudios());
+        persona.setOcupacion(monitor.ocupacion());
+        persona.setCarrera(monitor.carrera());
+        persona.setExperiencia(monitor.experiencia());
+        persona.setProfesionDepurada(monitor.profesionDepurada());
+        persona.setConvocatoriaIngreso(monitor.convocatoriaIngreso());
+        persona.setEmailSecundario(monitor.emailSecundario());
+        persona.setCelular(monitor.celular());
         persona.setRoleType(RoleType.MONITOR);
         return personaRepository.save(persona);
     }
@@ -62,29 +63,29 @@ public class MonitorServiceImp {
     }
 
     @Transactional
-    public Persona updateMonitor(String monitorId , Persona monitor){
+    public Persona updateMonitor(String monitorId , MonitorDTO monitor){
         Persona persona = personaRepository.findPersonaByIdMonitor(monitorId)
                 .orElseThrow(() -> new NotFoundException("No dniMonitor " + monitorId + " into the data base."));
         if(persona.getRoleType()!=RoleType.MONITOR){
             throw new NotFoundException("No dniMonitor " + monitorId + " into the data base.");
         }
         persona.setIdMonitor(monitorId);
-        persona.setAnioIngreso(monitor.getAnioIngreso());
-        persona.setRegionInscription(monitor.getRegionInscription());
-        persona.setProvinciaInscripcion(monitor.getProvinciaInscripcion());
-        persona.setDistritoInscripcion(monitor.getDistritoInscripcion());
-        persona.setUbigeoInei(monitor.getUbigeoInei());
-        persona.setRegionActual(monitor.getRegionActual());
-        persona.setProvinciaActual(monitor.getProvinciaActual());
-        persona.setDistritoActual(monitor.getDistritoActual());
-        persona.setEstudios(monitor.getEstudios());
-        persona.setOcupacion(monitor.getOcupacion());
-        persona.setCarrera(monitor.getCarrera());
-        persona.setExperiencia(monitor.getExperiencia());
-        persona.setProfesionDepurada(monitor.getProfesionDepurada());
-        persona.setConvocatoriaIngreso(monitor.getConvocatoriaIngreso());
-        persona.setEmailSecundario(monitor.getEmailSecundario());
-        persona.setCelular(monitor.getCelular());
+        persona.setAnioIngreso(monitor.anioIngreso());
+        persona.setRegionInscription(monitor.regionInscripcion());
+        persona.setProvinciaInscripcion(monitor.provinciaInscripcion());
+        persona.setDistritoInscripcion(monitor.distritoInscripcion());
+        persona.setUbigeoInei(monitor.ubigeoInei());
+        persona.setRegionActual(monitor.regionActual());
+        persona.setProvinciaActual(monitor.provinciaActual());
+        persona.setDistritoActual(monitor.distritoActual());
+        persona.setEstudios(monitor.estudios());
+        persona.setOcupacion(monitor.ocupacion());
+        persona.setCarrera(monitor.carrera());
+        persona.setExperiencia(monitor.experiencia());
+        persona.setProfesionDepurada(monitor.profesionDepurada());
+        persona.setConvocatoriaIngreso(monitor.convocatoriaIngreso());
+        persona.setEmailSecundario(monitor.emailSecundario());
+        persona.setCelular(monitor.celular());
         return personaRepository.save(persona);
     }
 
