@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.CoordDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Persona;
@@ -20,11 +21,11 @@ public class CoordinadorServiceImp {
 
 
     @Transactional
-    public Persona createCoord(Long personaId, Persona coord){
+    public Persona createCoord(Long personaId, CoordDTO coord){
         Persona persona = validatePersonaId(personaId);
-        persona.setIdCoordinador(coord.getIdCoordinador());
-        persona.setCelular(coord.getCelular());
-        persona.setEmailSecundario(coord.getEmailSecundario());
+        persona.setIdCoordinador(coord.idCoordinador());
+        persona.setCelular(coord.celular());
+        persona.setEmailSecundario(coord.emailSecundario());
         persona.setRoleType(RoleType.COORD);
         return personaRepository.save(persona);
     }
@@ -43,15 +44,15 @@ public class CoordinadorServiceImp {
     }
 
     @Transactional
-    public Persona updateCoord(String coordId, Persona coord){
+    public Persona updateCoord(String coordId, CoordDTO coord){
         Persona persona = personaRepository.findPersonaByIdCoordinador(coordId)
                 .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
         if(persona.getRoleType()!=RoleType.COORD){
             throw new NotFoundException("No dniCoordinador " + coordId + " into the data base.");
         }
         persona.setIdCoordinador(coordId);
-        persona.setCelular(coord.getCelular());
-        persona.setEmailSecundario(coord.getEmailSecundario());
+        persona.setCelular(coord.celular());
+        persona.setEmailSecundario(coord.emailSecundario());
         return personaRepository.save(persona);
     }
 
