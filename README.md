@@ -1,7 +1,15 @@
 ## Amasuapp - Backend
 ___
-### Description: 
+### Description:
 
+___
+### Swagger:
+In your browser, past the following URL:
+```bash
+http://localhost:8090/swagger-ui/index.html
+```
+
+___
 #### How to run:
 1. **Clone the repository**
 ```bash
