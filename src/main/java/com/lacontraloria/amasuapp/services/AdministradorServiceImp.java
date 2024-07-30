@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.AdmDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Persona;
@@ -20,11 +21,11 @@ public class AdministradorServiceImp {
 
 
     @Transactional
-    public Persona createAdm(Long personaId, Persona adm){
+    public Persona createAdm(Long personaId, AdmDTO adm){
         Persona persona = validatePersonaId(personaId);
-        persona.setIdAdministrador(adm.getIdAdministrador());
-        persona.setCelular(adm.getCelular());
-        persona.setEmailSecundario(adm.getEmailSecundario());
+        persona.setIdAdministrador(adm.idAdministrador());
+        persona.setCelular(adm.celular());
+        persona.setEmailSecundario(adm.emailSecundario());
         persona.setRoleType(RoleType.ADMIN);
         return personaRepository.save(persona);
     }
@@ -43,15 +44,15 @@ public class AdministradorServiceImp {
     }
 
     @Transactional
-    public Persona updateAdm(String admId, Persona adm){
+    public Persona updateAdm(String admId, AdmDTO adm){
         Persona persona = personaRepository.findPersonaByIdAdministrador(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
         if(persona.getRoleType()!=RoleType.ADMIN){
             throw new NotFoundException("No dniAdministrador " + admId + " into the data base.");
         }
         persona.setIdAdministrador(admId);
-        persona.setCelular(adm.getCelular());
-        persona.setEmailSecundario(adm.getEmailSecundario());
+        persona.setCelular(adm.celular());
+        persona.setEmailSecundario(adm.emailSecundario());
         return personaRepository.save(persona);
     }
 

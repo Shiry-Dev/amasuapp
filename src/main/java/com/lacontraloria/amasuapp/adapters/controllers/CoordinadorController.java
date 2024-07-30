@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.CoordDTO;
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.AdministradorServiceImp;
 import com.lacontraloria.amasuapp.services.CoordinadorServiceImp;
@@ -25,7 +26,7 @@ public class CoordinadorController {
 
     @PostMapping("/persona/{personaId}/coordinador")
     public ResponseEntity<Persona> createCoord(@PathVariable Long personaId,
-                                               @RequestBody Persona reqBody) {
+                                               @RequestBody CoordDTO reqBody) {
         Persona coord = coordinadorServiceImp.createCoord(personaId, reqBody);
         URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -54,7 +55,7 @@ public class CoordinadorController {
 
     @PutMapping("/coordinador/{coordinadorId}")
     public ResponseEntity<Persona> putCoordById(@PathVariable String coordinadorId,
-                                                @RequestBody Persona adm) {
+                                                @RequestBody CoordDTO adm) {
         Persona updatedCoord =  coordinadorServiceImp.updateCoord(coordinadorId, adm);
         return ResponseEntity.ok().body(updatedCoord);
     }

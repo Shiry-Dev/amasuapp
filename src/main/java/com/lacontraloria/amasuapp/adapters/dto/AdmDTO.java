@@ -1,4 +1,13 @@
 package com.lacontraloria.amasuapp.adapters.dto;
 
-public record AdmDTO() {
+import lombok.Builder;
+
+import java.time.LocalDate;
+
+@Builder
+public record AdmDTO(
+        String idAdministrador,
+        Long celular,
+        String emailSecundario
+) {
 }

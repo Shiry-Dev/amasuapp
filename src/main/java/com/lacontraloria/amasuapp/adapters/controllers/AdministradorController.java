@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.AdmDTO;
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.AdministradorServiceImp;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class AdministradorController {
 
     @PostMapping("/persona/{personaId}/administrador")
     public ResponseEntity<Persona> createAdm(@PathVariable Long personaId,
-                                             @RequestBody Persona reqBody) {
+                                             @RequestBody AdmDTO reqBody) {
         Persona adm = administradorServiceImp.createAdm(personaId, reqBody);
         URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -53,7 +54,7 @@ public class AdministradorController {
 
     @PutMapping("/administrador/{administradorId}")
     public ResponseEntity<Persona> putPersonalById(@PathVariable String administradorId,
-                                                   @RequestBody Persona adm) {
+                                                   @RequestBody AdmDTO adm) {
         Persona updatedAdm =  administradorServiceImp.updateAdm(administradorId, adm);
         return ResponseEntity.ok().body(updatedAdm);
     }
