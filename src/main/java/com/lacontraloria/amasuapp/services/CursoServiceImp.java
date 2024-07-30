@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.CursoDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.CursoRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
@@ -23,7 +24,9 @@ public class CursoServiceImp {
     }
 
     @Transactional
-    public Curso createCurso(Curso curso){
+    public Curso createCurso(CursoDTO reqCurso){
+        Curso curso = new Curso();
+        curso.setDescCurso(reqCurso.descCurso());
         return cursoRepository.save(curso);
     }
 
@@ -40,10 +43,11 @@ public class CursoServiceImp {
     }
 
     @Transactional
-    public Curso updateCurso(Long cursoId, Curso curso){
-        Curso cursoDb = cursoRepository.findById(cursoId)
+    public Curso updateCurso(Long cursoId, CursoDTO reqCurso){
+        Curso curso = cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new NotFoundException("No cursoId " + cursoId + " into the data base."));
-        curso.setIdCurso(cursoDb.getIdCurso());
+        curso.setIdCurso(cursoId);
+        curso.setDescCurso(reqCurso.descCurso());
         Curso updatedCurso = cursoRepository.save(curso);
         return updatedCurso;
     }
