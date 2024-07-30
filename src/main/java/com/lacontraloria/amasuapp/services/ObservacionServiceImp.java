@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.ObservacionDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.ObservacionRepository;
@@ -24,8 +25,10 @@ public class ObservacionServiceImp {
     }
 
     @Transactional
-    public Observacion createObservacion(Observacion observacion){
-        return observacionRepository.save(observacion);
+    public Observacion createObservacion(ObservacionDTO observacion){
+        Observacion obs = new Observacion();
+        obs.setDescObservacion(observacion.descObservacion());
+        return observacionRepository.save(obs);
     }
 
     @Transactional(readOnly = true)
@@ -41,11 +44,11 @@ public class ObservacionServiceImp {
     }
 
     @Transactional
-    public Observacion updateObservacion(Long observacionId, Observacion observacion){
+    public Observacion updateObservacion(Long observacionId, ObservacionDTO observacion){
         Observacion obs = observacionRepository.findById(observacionId)
                 .orElseThrow(() -> new NotFoundException("No observacionId " + observacionId + " into the data base."));
-        observacion.setIdObservacion(obs.getIdObservacion());
-        Observacion updatedObs = observacionRepository.save(observacion);
+        obs.setDescObservacion(observacion.descObservacion());
+        Observacion updatedObs = observacionRepository.save(obs);
         return updatedObs;
     }
 

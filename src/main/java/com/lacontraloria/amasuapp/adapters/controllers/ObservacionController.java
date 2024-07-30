@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.ObservacionDTO;
 import com.lacontraloria.amasuapp.domains.Observacion;
 import com.lacontraloria.amasuapp.services.ObservacionServiceImp;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class ObservacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Observacion> createObservacion(@RequestBody Observacion reqBody) {
+    public ResponseEntity<Observacion> createObservacion(@RequestBody ObservacionDTO reqBody) {
         Observacion observacion = observacionServiceImp.createObservacion(reqBody);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,7 +53,7 @@ public class ObservacionController {
 
     @PutMapping("/{observacionId}")
     public ResponseEntity<Observacion> putObservacion(@PathVariable Long observacionId,
-                                                      @RequestBody Observacion observacion) {
+                                                      @RequestBody ObservacionDTO observacion) {
         Observacion updatedObs =  observacionServiceImp.updateObservacion(observacionId, observacion);
         return ResponseEntity.ok().body(updatedObs);
     }
