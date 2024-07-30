@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.CursoDTO;
 import com.lacontraloria.amasuapp.domains.Curso;
 import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.CursoServiceImp;
@@ -24,7 +25,7 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<Curso> createCurso(@RequestBody Curso reqBody) {
+    public ResponseEntity<Curso> createCurso(@RequestBody CursoDTO reqBody) {
         Curso curso = cursoServiceImp.createCurso(reqBody);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -53,7 +54,7 @@ public class CursoController {
 
     @PutMapping("/{cursoId}")
     public ResponseEntity<Curso> putCursoId(@PathVariable Long cursoId,
-                                            @RequestBody Curso curso) {
+                                            @RequestBody CursoDTO curso) {
         Curso updatedCurso =  cursoServiceImp.updateCurso(cursoId, curso);
         return ResponseEntity.ok().body(updatedCurso);
     }
