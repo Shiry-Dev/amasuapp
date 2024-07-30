@@ -36,13 +36,6 @@ public class ImagenServiceImp {
         return convertToDto(imagen);
     }
 
-//    @Transactional(readOnly = true)
-//    public Page<ImagenDTO> getAllImagen( Long alertaId, PageRequest pageRequest) {
-//        validateAlertaId(alertaId);
-//        Page<Imagen> listImg = imagenRepository.findAll(pageRequest);
-//        return listImg.map(this::convertToDto);
-//    }
-
     @Transactional
     public ImagenDTO updateImagen( Long alertaId, Long imagenId, Imagen reqBody){
         Alerta alerta = validateAlertaId(alertaId);

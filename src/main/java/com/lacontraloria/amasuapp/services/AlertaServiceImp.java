@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.services;
 
+import com.lacontraloria.amasuapp.adapters.dto.AlertaDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.ObservacionRepository;
@@ -32,7 +33,10 @@ public class AlertaServiceImp {
 
 
     @Transactional
-    public Alerta createAlerta(Alerta alerta){
+    public Alerta createAlerta(AlertaDTO alertaReq){
+        Alerta alerta = new Alerta();
+        alerta.setCui(alertaReq.cui());
+        alerta.setComentarioAlerta(alertaReq.comentarioAlerta());
         alerta.setFechaCreacion(LocalDateTime.now());
         return alertaRepository.save(alerta);
     }

@@ -1,5 +1,6 @@
 package com.lacontraloria.amasuapp.adapters.controllers;
 
+import com.lacontraloria.amasuapp.adapters.dto.AlertaDTO;
 import com.lacontraloria.amasuapp.domains.Alerta;
 import com.lacontraloria.amasuapp.services.AlertaServiceImp;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class AlertaController {
     }
 
     @PostMapping
-    public ResponseEntity<Alerta> createAlerta(@RequestBody Alerta reqBody) {
+    public ResponseEntity<Alerta> createAlerta(@RequestBody AlertaDTO reqBody) {
         Alerta alerta = alertaServiceImp.createAlerta(reqBody);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
