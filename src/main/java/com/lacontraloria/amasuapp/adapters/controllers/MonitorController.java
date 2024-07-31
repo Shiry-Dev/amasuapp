@@ -2,7 +2,6 @@ package com.lacontraloria.amasuapp.adapters.controllers;
 
 import com.lacontraloria.amasuapp.adapters.dto.MonitorDTO;
 import com.lacontraloria.amasuapp.domains.Persona;
-import com.lacontraloria.amasuapp.services.CoordinadorServiceImp;
 import com.lacontraloria.amasuapp.services.MonitorServiceImp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

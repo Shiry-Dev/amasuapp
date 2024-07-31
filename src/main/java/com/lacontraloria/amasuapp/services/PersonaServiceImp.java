@@ -1,6 +1,5 @@
 package com.lacontraloria.amasuapp.services;
 
-import com.lacontraloria.amasuapp.adapters.dto.AuthDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.AlertaRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.CursoRepository;
@@ -103,20 +102,6 @@ public class PersonaServiceImp {
         persona.setCursos(asignados);
         personaRepository.save(persona);
     }
-
-//    public void assignAlertaToPersona(Long personaId, List<Long> alertaIds) {
-//        Persona persona = personaRepository.findById(personaId)
-//                .orElseThrow(() -> new NotFoundException("No dniRienic " + personaId + " into the data base."));
-//        Set<Alerta> asignados = new HashSet<>(persona.getAlertas());
-//
-//        for (Long alertaId: alertaIds) {
-//            Alerta alerta = alertaRepository.findById(alertaId)
-//                    .orElseThrow(() -> new NotFoundException("No alertaId" + alertaId + " into the data base."));
-//            asignados.add(alerta);
-//        }
-//        persona.setAlertas(asignados);
-//        personaRepository.save(persona);
-//    }
 
     @Transactional
     public void assignAlertaToPersona(Long personaId, List<Long> alertaIds) {

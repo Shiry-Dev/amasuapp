@@ -12,11 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -34,28 +32,6 @@ public class VeeduriaServiceImp {
         veeduria.setFechaCreacion(LocalDateTime.now());
         return veeduriaRepository.save(veeduria);
     }
-
-//    @Transactional
-//    public Veeduria addMonitorsToVeeduria(Long veeduriaId, List<Long> monitorIds) {
-//        Optional<Veeduria> veeduriaOptional = veeduriaRepository.findById(veeduriaId);
-//        if (veeduriaOptional.isPresent()) {
-//            Veeduria veeduria = veeduriaOptional.get();
-//            Set<Persona> monitors = new HashSet<>();
-//            for (Long monitorId : monitorIds) {
-//                Persona persona = personaRepository.findById(monitorId).get();
-//                if (persona.getRoleType() == RoleType.MONITOR) {
-//                    monitors.add(persona);
-//                }
-//            }
-//            veeduria.setCui(veeduria.getCui());
-//            veeduria.setFechaCreacion(veeduria.getFechaCreacion());
-//            veeduria.setFechaVeeduria(veeduria.getFechaVeeduria());
-//            veeduria.setMonitoresAsignados(monitors);
-//            return veeduriaRepository.save(veeduria);
-//        } else {
-//            throw new NotFoundException("Veeduria not found!");
-//        }
-//    }
 
     public Veeduria getVeeduriaById(Long veeduriaId) {
         return veeduriaRepository.findById(veeduriaId)

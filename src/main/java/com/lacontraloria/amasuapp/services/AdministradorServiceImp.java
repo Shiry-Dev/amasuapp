@@ -32,7 +32,6 @@ public class AdministradorServiceImp {
 
     @Transactional(readOnly = true)
     public Persona findAdminById(String admId) {
-//        validatePersonaId(personaId);
         return personaRepository.findPersonaByIdAdministrador(admId)
                 .orElseThrow(() -> new NotFoundException("No dniAdministrador " + admId + " into the data base."));
     }

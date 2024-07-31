@@ -1,6 +1,5 @@
 package com.lacontraloria.amasuapp.config;
 
-import com.lacontraloria.amasuapp.adapters.dto.AuthDTO;
 import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -5,7 +5,6 @@ import com.lacontraloria.amasuapp.adapters.exceptions.NotFoundException;
 import com.lacontraloria.amasuapp.adapters.repositories.CursoRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Curso;
-import com.lacontraloria.amasuapp.domains.Persona;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

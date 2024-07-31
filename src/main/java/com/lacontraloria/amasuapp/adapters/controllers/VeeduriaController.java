@@ -27,12 +27,6 @@ public class VeeduriaController {
         return ResponseEntity.ok(createdVeeduria);
     }
 
-//    @PostMapping("/{veeduriaId}/monitores/asignado")
-//    public ResponseEntity<Veeduria> addMonitors(@PathVariable Long veeduriaId, @RequestBody List<Long> monitorIds) {
-//        Veeduria updatedVeeduria = veeduriaServiceImp.addMonitorsToVeeduria(veeduriaId, monitorIds);
-//        return ResponseEntity.ok(updatedVeeduria);
-//    }
-
     @GetMapping("/veedurias/{veeduriaId}")
     public ResponseEntity<Veeduria> getVeeduriaById(@PathVariable Long veeduriaId) {
         Veeduria veeduria = veeduriaServiceImp.getVeeduriaById(veeduriaId);

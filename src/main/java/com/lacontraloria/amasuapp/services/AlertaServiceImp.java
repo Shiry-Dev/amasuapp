@@ -7,7 +7,6 @@ import com.lacontraloria.amasuapp.adapters.repositories.ObservacionRepository;
 import com.lacontraloria.amasuapp.adapters.repositories.PersonaRepository;
 import com.lacontraloria.amasuapp.domains.Alerta;
 import com.lacontraloria.amasuapp.domains.Observacion;
-import com.lacontraloria.amasuapp.domains.Persona;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
