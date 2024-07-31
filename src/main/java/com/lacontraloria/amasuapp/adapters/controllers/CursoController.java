@@ -2,7 +2,6 @@ package com.lacontraloria.amasuapp.adapters.controllers;
 
 import com.lacontraloria.amasuapp.adapters.dto.CursoDTO;
 import com.lacontraloria.amasuapp.domains.Curso;
-import com.lacontraloria.amasuapp.domains.Persona;
 import com.lacontraloria.amasuapp.services.CursoServiceImp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -32,7 +32,6 @@ public class CoordinadorServiceImp {
 
     @Transactional(readOnly = true)
     public Persona findCoordById(String coordId) {
-//        validatePersonaId(personaId);
         return personaRepository.findPersonaByIdCoordinador(coordId)
                 .orElseThrow(() -> new NotFoundException("No dniCoordinador " + coordId + " into the data base."));
     }

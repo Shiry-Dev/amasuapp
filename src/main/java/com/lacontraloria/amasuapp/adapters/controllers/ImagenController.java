@@ -38,18 +38,6 @@ public class ImagenController {
         return ResponseEntity.ok().body(imagen);
     }
 
-//    @GetMapping
-//    public ResponseEntity<PagedModel<ImagenDTO>> getAllImagen(@PathVariable Long alertaId,
-//                                                              @RequestParam (value = "page", defaultValue = "1", required = false) Integer page,
-//                                                              @RequestParam (value = "size", defaultValue = "10", required = false) Integer size,
-//                                                              @RequestParam (value = "sort", defaultValue = "idImagen", required = false) String sort,
-//                                                              @RequestParam (value = "direction", defaultValue = "ASC", required = false) String direction){
-//        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.Direction.valueOf(direction), sort);
-//        Page<ImagenDTO> listImg = imagenServiceImp.getAllImagen(alertaId, pageRequest);
-//        PagedModel<ImagenDTO> pagedImg = new PagedModel<>(listImg);
-//        return ResponseEntity.ok().body(pagedImg);
-//    }
-
     @PutMapping("/{imagenId}")
     public ResponseEntity<ImagenDTO> putCursoId(@PathVariable Long alertaId,
                                                 @PathVariable Long imagenId,
