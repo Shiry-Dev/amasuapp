@@ -4,7 +4,7 @@ ___
 
 ___
 ### Swagger:
-In your browser, past the following URL:
+In your browser, paste the following URL:
 ```bash
 http://localhost:8090/swagger-ui/index.html
 ```
