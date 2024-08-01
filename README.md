@@ -13,7 +13,7 @@ ___
 #### How to run:
 1. **Clone the repository**
 ```bash
-https://github.com/Shiry-Dev/amasuapp/tree/develop
+https://github.com/Shiry-Dev/amasuapp
 ```
 
 2. **Run the following command in the terminal to create the database:**
